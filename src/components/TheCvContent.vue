@@ -35,14 +35,14 @@ function addItem(category: Category): void {
 <template>
     <div class="cvContent">
         <h1>Inhalt</h1>
-        <div class="contentSection">
+        <div class="cvContentSection">
             <h2>Passfoto</h2>
             <div class="fileUpload">
-                <input type="file" id="myFile" name="filename" @change="handleFileChange"/>
+                <input type="file" accept="image/*" id="myFile" name="filename" @change="handleFileChange"/>
             </div>
             <img v-if="content.profilePicture" :src="content.profilePicture" width="20" />
         </div>
-        <div class="contentSection">
+        <div class="cvContentSection">
             <h2>Persönliche Informationen</h2>
             <div class="inputFieldList">
                 <label for="inputName">Name</label>
@@ -76,20 +76,20 @@ function addItem(category: Category): void {
                 <input type="url" id="inputXing" v-model="content.xing" />
             </div>
         </div>
-        <div class="contentSection">
+        <div class="cvContentSection">
             <h2>Werdegang</h2>
-            <button @click="addItem(Category.WERDEGANG)">Add</button>
             <TheCvContentItem v-for="(item, idx) in content.getItems(Category.WERDEGANG)" :uuid="item.uuid"/>
+            <button @click="addItem(Category.WERDEGANG)">Add</button>
         </div>
-        <div class="contentSection">
+        <div class="cvContentSection">
             <h2>Ausbildung</h2>
-            <button @click="addItem(Category.AUSBILDUNG)">Add</button>
             <TheCvContentItem v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)" :uuid="item.uuid"/>
+            <button @click="addItem(Category.AUSBILDUNG)">Add</button>
         </div>
-        <div class="contentSection">
+        <div class="cvContentSection">
             <h2>Engagement</h2>
-            <button @click="addItem(Category.ENGAGEMENT)">Add</button>
             <TheCvContentItem v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)" :uuid="item.uuid"/>
+            <button @click="addItem(Category.ENGAGEMENT)">Add</button>
         </div>
     </div>
 </template>
@@ -99,6 +99,12 @@ function addItem(category: Category): void {
     padding: 20px;
 
     border-right: 2px dashed black;
+}
+
+.cvContentSection {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
 }
 
 .inputFieldList {

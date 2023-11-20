@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { useContentStore } from "@/stores/content";
 import { useSettingsStore } from "@/stores/settings";
-import { DIMENSIONS } from "@/components/cvDimensions";
+import { DIMENSIONS, in_mm } from "@/components/cvDimensions";
 
 const content = useContentStore();
 const settings = useSettingsStore();
 
-const top = "" + DIMENSIONS.a4padding_t_mm + "mm";
-const right = "" + DIMENSIONS.a4padding_t_mm + "mm";
 </script>
 <template>
     <img v-if="content.profilePicture" class="profilePicture" :src="content.profilePicture"/>
@@ -15,8 +13,8 @@ const right = "" + DIMENSIONS.a4padding_t_mm + "mm";
 <style scoped lang="scss">
 .profilePicture {
     position: absolute;
-    right: v-bind("right");
-    top: v-bind("top");
+    right: v-bind("in_mm(DIMENSIONS.a4padding_r_mm)");
+    top: v-bind("in_mm(DIMENSIONS.a4padding_t_mm)");
     
     border: 2px solid;
     color: v-bind("settings.color");

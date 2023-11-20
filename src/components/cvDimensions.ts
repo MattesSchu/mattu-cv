@@ -11,6 +11,7 @@ export interface Dimensions {
     profileImageWidth_mm: number;
 
     timelinePosition_x_mm: number;
+    timelineMargin: number;
 }
 
 export function in_mm(dim: number): string {
@@ -30,5 +31,6 @@ export const DIMENSIONS: Dimensions = {
     profileImageHeight_mm: 40,
     profileImageWidth_mm: 20,
     //
-    timelinePosition_x_mm: 30,
+    timelinePosition_x_mm: 50,
+    timelineMargin: 10,
 };

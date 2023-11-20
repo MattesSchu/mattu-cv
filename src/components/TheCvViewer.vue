@@ -7,6 +7,8 @@ import { useSettingsStore } from "@/stores/settings";
 import { DIMENSIONS, in_mm } from "./cvDimensions";
 import TheCvViewerItem from "./TheCvViewerItem.vue";
 import { Category } from "./TimelineItem";
+import TheCvViewerSectionHeading from "./TheCvViewerSectionHeading.vue";
+import { mdiSchoolOutline } from "@mdi/js";
 
 const settings = useSettingsStore();
 const content = useContentStore();
@@ -51,14 +53,14 @@ const timelinePositionX = "" + DIMENSIONS.timelinePosition_x_mm + "mm";
                 </div>
             </div>
             <div class="pProfilePicture"></div>
-            <h2>Werdegang</h2>
-            <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.WERDEGANG)" :idx="idx" />
-            <h2>Ausbildung</h2>
-            <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)" :idx="idx" />
-            <h2>Engagement</h2>
-            <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)" :idx="idx" />
+            <TheCvViewerSectionHeading title="Werdegang" :path="mdiSchoolOutline" />
+            <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.WERDEGANG)" :item="item" />
+            <TheCvViewerSectionHeading title="Ausbildung" :path="mdiSchoolOutline" />
+            <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)" :item="item" />
+            <TheCvViewerSectionHeading title="Engagement" :path="mdiSchoolOutline" />
+            <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)" :item="item" />
         </div>
-        <div class="page"></div>
+        <div class="cvPage"></div>
     </div>
 </template>
 <style scoped lang="scss">
@@ -69,9 +71,8 @@ const timelinePositionX = "" + DIMENSIONS.timelinePosition_x_mm + "mm";
 
 .cvPage {
     height: 297mm;
-    background-color: rgb(223, 223, 223);
-
-    border-radius: 5px;
+    border-radius: 10px;
+    background-color: white;
 }
 
 .cvTitle {
@@ -84,7 +85,7 @@ const timelinePositionX = "" + DIMENSIONS.timelinePosition_x_mm + "mm";
 
 .cvPersonal {
     position: relative;
-    left: v-bind("timelinePositionX")
+    left: v-bind("timelinePositionX");
 }
 
 .cvPersonalItem {

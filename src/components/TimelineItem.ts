@@ -4,9 +4,21 @@ export enum Category {
     ENGAGEMENT,
 }
 
+/**
+ *  @field {string} uuid 
+ *  @field {string} title 
+ *  @field {Category} category 
+ *  @field {string} location 
+ *  @field {string} text 
+ *  @field {Date} start 
+ *  @field {Date?} end
+ *  @field {string} image
+ *  @field {TimelineItemSub[]} subitems 
+ */
 export interface TimelineItem {
-    uuid: string,
+    uuid: string;
     title: string;
+    subtitle?: string;
     category: Category;
     location: string;
     text: string;

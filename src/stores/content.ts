@@ -34,11 +34,8 @@ export const useContentStore = defineStore(
         }
 
         function getItem(uuid: string): TimelineItem | undefined {
-            console.log("GET ITEM - UUID", uuid);
             for (let i = 0; i < items.data.length; i++) {
-                console.log(items.data[i]);
                 if (items.data[i].uuid === uuid) {
-                    console.log("FOUND");
                     return items.data[i];
                 }
             }

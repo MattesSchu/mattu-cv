@@ -5,9 +5,11 @@ export const useSettingsStore = defineStore(
     "settings",
     () => {
         const color = ref("orange");
+        const vLinePositionX_mm = ref(20);
 
         return {
             color,
+            vLinePositionX_mm,
         };
     },
     { persist: true },
