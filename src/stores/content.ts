@@ -7,6 +7,26 @@ interface ReactiveItems {
     data: TimelineItem[];
 }
 
+function serializeState(state: Record<string, any>): string {
+    // Convert Date objects to strings
+    return JSON.stringify(state, (key, value) => {
+        if (value instanceof Date) {
+            return value.toISOString();
+        }
+        return value;
+    });
+}
+
+function deserializeState(value: string): Record<string, any> {
+    // Convert strings back to Date objects
+    return JSON.parse(value, (key, value) => {
+        if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z$/.test(value)) {
+            return new Date(value);
+        }
+        return value;
+    });
+}
+
 export const useContentStore = defineStore(
     "content",
     () => {
@@ -69,5 +89,12 @@ export const useContentStore = defineStore(
             deleteItem,
         };
     },
-    { persist: true },
+    {
+        persist: {
+            serializer: {
+                serialize: serializeState,
+                deserialize: deserializeState,
+            },
+        },
+    },
 );
