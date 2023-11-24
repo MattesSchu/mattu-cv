@@ -3,6 +3,7 @@ interface Props {
     path: string;
     width: number;
     height: number;
+    color?: string;
 }
 
 const props = defineProps<Props>();
@@ -18,7 +19,7 @@ function getViewBox():string {
         :width="props.width"
         :height="props.height"
     >
-        <path fill="white" :d="props.path"></path>
+        <path :fill="props.color ? props.color : 'white'" :d="props.path"></path>
     </svg>
 </template>
 <style lang="scss" scoped></style>

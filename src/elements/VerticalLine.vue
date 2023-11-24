@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { DIMENSIONS } from "@/components/cvDimensions";
+import { DIMENSIONS, in_mm } from "@/components/cvDimensions";
 import { useSettingsStore } from "@/stores/settings";
 
 const settings = useSettingsStore();
@@ -24,10 +24,11 @@ const height = "" + ((DIMENSIONS.a4height_mm * 2) - props.posY) + "mm";
     top: v-bind(posY);
     height: v-bind(height);
 
-    border: 3px dotted;
+    border: v-bind("in_mm(DIMENSIONS.timelineBorder_mm)") dotted;
     border-top-width: 0px;
     border-bottom-width: 0px;
     border-right-width: 0px;
     border-color: v-bind("settings.color");
+    transform: translateX(v-bind("in_mm(-DIMENSIONS.timelineBorder_mm/2)"));
 }
 </style>

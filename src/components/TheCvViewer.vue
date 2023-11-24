@@ -9,11 +9,11 @@ import TheCvViewerItem from "./TheCvViewerItem.vue";
 import { Category } from "./TimelineItem";
 import TheCvViewerSectionHeading from "./TheCvViewerSectionHeading.vue";
 import { mdiSchoolOutline } from "@mdi/js";
+import TheCvViewerPersonal from "./TheCvViewerPersonal.vue";
 
 const settings = useSettingsStore();
 const content = useContentStore();
 
-const timelinePositionX = "" + DIMENSIONS.timelinePosition_x_mm + "mm";
 </script>
 <template>
     <div class="cv">
@@ -23,39 +23,11 @@ const timelinePositionX = "" + DIMENSIONS.timelinePosition_x_mm + "mm";
         <ProfilePicture />
         <div class="cvPage">
             <div class="cvTitle">{{ content.name }}</div>
-            <div class="cvPersonal">
-                <div class="cvPersonalItem">
-                    <div>Anschrift</div>
-                    <ul>
-                        <li>{{ content.address }}</li>
-                        <li>{{ content.postal }}</li>
-                    </ul>
-                </div>
-                <div class="pPersonalItem">
-                    <div>Telefon</div>
-                    <div>{{ content.phone }}</div>
-                </div>
-                <div class="pPersonalItem">
-                    <div>E-Mail</div>
-                    <div>{{ content.mail }}</div>
-                </div>
-                <div class="pPersonalItem">
-                    <div>Xing</div>
-                    <div>{{ content.xing }}</div>
-                </div>
-                <div class="pPersonalItem">
-                    <div>Familienstand</div>
-                    <div>{{ content.family }}</div>
-                </div>
-                <div class="pPersonalItem">
-                    <div>Geburt</div>
-                    <div>{{ content.birthday }} in {{ content.birthplace }}</div>
-                </div>
-            </div>
+            <TheCvViewerPersonal />
             <div class="pProfilePicture"></div>
             <TheCvViewerSectionHeading title="Werdegang" :path="mdiSchoolOutline" />
             <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.WERDEGANG)" :item="item" />
-            <TheCvViewerSectionHeading title="Ausbildung" :path="mdiSchoolOutline" />
+            <TheCvViewerSectionHeading title="Erfahrung" :path="mdiSchoolOutline" />
             <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)" :item="item" />
             <TheCvViewerSectionHeading title="Engagement" :path="mdiSchoolOutline" />
             <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)" :item="item" />
@@ -81,14 +53,6 @@ const timelinePositionX = "" + DIMENSIONS.timelinePosition_x_mm + "mm";
     text-transform: uppercase;
     padding-left: v-bind("in_mm(DIMENSIONS.a4padding_l_mm)");
     padding-top: calc(v-bind("in_mm(DIMENSIONS.a4padding_t_mm)") - 2px);
-}
-
-.cvPersonal {
-    position: relative;
-    left: v-bind("timelinePositionX");
-}
-
-.cvPersonalItem {
 }
 
 @media print {
