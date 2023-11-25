@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useContentStore } from "@/stores/content";
-import { DIMENSIONS } from "@/components/cvDimensions";
+import { DIMENSIONS, in_mm } from "@/components/cvDimensions";
+import { useSettingsStore } from "@/stores/settings";
 
 interface Props {
     page: number;
@@ -8,15 +9,18 @@ interface Props {
 
 const props = defineProps<Props>();
 const content = useContentStore();
-
-const width = "" + DIMENSIONS.a4width_mm + "mm";
-const posY = "" + (props.page * (DIMENSIONS.a4height_mm - DIMENSIONS.a4footerHeight_mm)) + "mm";
+const settings = useSettingsStore();
 </script>
 <template>
-    <div class="cvFooter">
+    <div class="cvFooter cvMainFooterText">
         <div class="cvFooterContact">
-            - {{ content.name }} - {{ content.address }} - {{ content.postal }} - <br />
-            - {{ content.phone }} - {{ content.mail }} -
+            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.name }}
+            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.address }}
+            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.postal }}
+            <span :style="{ color: settings.color }">&#x2012;</span> <br />
+            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.phone }}
+            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.mail }}
+            <span :style="{ color: settings.color }">&#x2012;</span>
         </div>
         <div class="cvFooterPagination">Seite {{ props.page }} von 2</div>
     </div>
@@ -24,8 +28,10 @@ const posY = "" + (props.page * (DIMENSIONS.a4height_mm - DIMENSIONS.a4footerHei
 <style scoped lang="scss">
 .cvFooter {
     position: absolute;
-    width: v-bind(width);
-    top: v-bind(posY);
+    width: v-bind("in_mm(DIMENSIONS.a4width_mm)");
+    top: v-bind(
+        "in_mm(props.page * DIMENSIONS.a4height_mm - DIMENSIONS.a4footerHeight_mm - DIMENSIONS.a4padding_b_mm)"
+    );
 }
 
 .cvFooterContact {

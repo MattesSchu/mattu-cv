@@ -11,6 +11,26 @@ button {
     border: 1px solid black;
 }
 
+textarea {
+    height: 4em;
+    overflow-y: auto;
+    resize: none;
+
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+
+    margin: 5px;
+}
+
+textarea:focus {
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-top-width: 0px;
+    outline: none;
+    border-bottom-color: green;
+}
+
 input[type=url],
 input[type=date],
 input[type=email],

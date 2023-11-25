@@ -4,6 +4,14 @@ export enum Category {
     ENGAGEMENT,
 }
 
+export interface TimelineItemSub {
+    uuid: string;
+    title: string;
+    subtitle: string;
+    text?: string;
+    split: boolean;
+}
+
 /**
  *  @field {string} uuid 
  *  @field {string} title 
@@ -26,10 +34,4 @@ export interface TimelineItem {
     end?: Date;
     image?: string;
     subitems: TimelineItemSub[];
-}
-
-export interface TimelineItemSub {
-    title: string;
-    text?: string;
-    image?: string;
 }

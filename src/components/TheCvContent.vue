@@ -4,6 +4,11 @@ import TheCvContentItem from "./TheCvContentItem.vue";
 import { Category } from "./TimelineItem";
 import type { TimelineItem } from "./TimelineItem";
 import { v4 as uuidv4 } from "uuid";
+import TheSettings from "./TheSettings.vue";
+import { useSettingsStore } from "@/stores/settings";
+
+const content = useContentStore();
+const settings = useSettingsStore();
 
 function handleFileChange(e: Event): void {
     const input = e.target as HTMLInputElement;
@@ -16,8 +21,6 @@ function handleFileChange(e: Event): void {
         reader.readAsDataURL(input.files[0]);
     }
 }
-
-const content = useContentStore();
 
 function addItem(category: Category): void {
     const item: TimelineItem = {
@@ -34,7 +37,11 @@ function addItem(category: Category): void {
 </script>
 <template>
     <div class="cvContent">
-        <h1>Inhalt</h1>
+        <div class="cvContentSection">
+            <h2>Einstellungen</h2>
+            <!-- TODO: move settings to different container -->
+            <TheSettings />
+        </div>
         <div class="cvContentSection">
             <h2>Passfoto</h2>
             <div class="fileUpload">
@@ -79,26 +86,32 @@ function addItem(category: Category): void {
         <div class="cvContentSection">
             <h2>Werdegang</h2>
             <TheCvContentItem v-for="(item, idx) in content.getItems(Category.WERDEGANG)" :uuid="item.uuid"/>
-            <button @click="addItem(Category.WERDEGANG)">Add</button>
+            <button @click="addItem(Category.WERDEGANG)">Add Item</button>
         </div>
         <div class="cvContentSection">
-            <h2>Ausbildung</h2>
+            <h2>Erfahrung</h2>
             <TheCvContentItem v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)" :uuid="item.uuid"/>
-            <button @click="addItem(Category.AUSBILDUNG)">Add</button>
+            <button @click="addItem(Category.AUSBILDUNG)">Add Item</button>
         </div>
         <div class="cvContentSection">
             <h2>Engagement</h2>
             <TheCvContentItem v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)" :uuid="item.uuid"/>
-            <button @click="addItem(Category.ENGAGEMENT)">Add</button>
+            <button @click="addItem(Category.ENGAGEMENT)">Add Item</button>
         </div>
     </div>
 </template>
 <style scoped lang="scss">
 .cvContent {
     width: 100%;
+    height: 100vh;
     padding: 20px;
 
     border-right: 2px dashed black;
+
+    display: v-bind("settings.printModeActive ? 'none' : 'block'");
+    visibility: v-bind("settings.printModeActive ? 'hidden' : 'vsisble'");
+
+    overflow: scroll;
 }
 
 .cvContentSection {

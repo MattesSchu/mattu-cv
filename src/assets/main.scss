@@ -1,0 +1,41 @@
+@import './base.css';
+@import './elements.scss';
+
+:root {
+    --content-font-siez: .8em;
+}
+
+.cvMainSectionTitle {
+
+}
+
+.cvMainSectionSubtitle {
+    font-size: 1.2em;
+}
+
+.cvMainSectionSubtitle_01 {
+    color: rgb(44, 44, 44);
+    font-weight: 600;
+}
+
+.cvMainSectionSubtitle_02 {
+    font-weight: lighter;
+}
+
+.cvMainBullitTitle {
+    font-size: var(--content-font-siez);
+    line-height: 1.2;
+    color: rgb(124, 124, 124);
+}
+
+.cvMainSectionText {
+    font-size: var(--content-font-siez);
+    line-height: 1.2;
+    margin-bottom: 5px;
+}
+
+.cvMainFooterText {
+    color: rgb(124, 124, 124);
+    font-weight: lighter;
+    font-size: 0.8em;
+}

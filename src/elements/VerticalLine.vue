@@ -10,9 +10,6 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-const posX = "" + props.posX + "mm";
-const posY = "" + props.posY + "mm";
-const height = "" + ((DIMENSIONS.a4height_mm * 2) - props.posY) + "mm";
 </script>
 <template>
     <div class="vLine"></div>
@@ -20,9 +17,9 @@ const height = "" + ((DIMENSIONS.a4height_mm * 2) - props.posY) + "mm";
 <style scoped lang="scss">
 .vLine {
     position: absolute;
-    left: v-bind(posX);
-    top: v-bind(posY);
-    height: v-bind(height);
+    left: v-bind("in_mm(props.posX)");
+    top: v-bind("in_mm(props.posY)");
+    height: v-bind("in_mm((DIMENSIONS.a4height_mm * 2) - props.posY)");
 
     border: v-bind("in_mm(DIMENSIONS.timelineBorder_mm)") dotted;
     border-top-width: 0px;

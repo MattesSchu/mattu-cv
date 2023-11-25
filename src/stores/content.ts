@@ -1,4 +1,4 @@
-import { Category, type TimelineItem } from "@/components/TimelineItem";
+import { Category, type TimelineItem, type TimelineItemSub } from "@/components/TimelineItem";
 import { defineStore } from "pinia";
 import { reactive, ref } from "vue";
 import { v4 as uuidv4 } from "uuid";
@@ -62,6 +62,52 @@ export const useContentStore = defineStore(
             return undefined;
         }
 
+        function getSubItem(parentUuid: string, subItemUuid: string): TimelineItemSub | undefined {
+            const parent = getItem(parentUuid);
+            if (!parent) {
+                return undefined;
+            }
+            for (let i = 0; i < parent.subitems.length; i++) {
+                if (parent.subitems[i].uuid === subItemUuid) {
+                    return parent.subitems[i];
+                }
+            }
+            return undefined;
+        }
+
+        // TODO: generalize, give array
+        function getItemIdx(uuid: string): number {
+            let idx = -1;
+            for (let i = 0; i < items.data.length; i++)
+            {
+                if (items.data[i].uuid === uuid)
+                {
+                    idx = i;
+                    break;
+                }
+            }
+            return idx;
+        }
+
+        // TODO: generalize, give array
+        function getSubItemIdx(parentUuid: string, uuid: string): number {
+            const parent = getItem(parentUuid);
+            if (!parent) {
+                return -1;
+            }
+            let idx = -1;
+            for (let i = 0; i < parent.subitems.length; i++)
+            {
+                if (parent.subitems[i].uuid === uuid)
+                {
+                    idx = i;
+                    break;
+                }
+            }
+            return idx;
+        }
+
+        // TODO: generalize, give array
         function deleteItem(uuid: string): void {
             for (let i = 0; i < items.data.length; i++) {
                 if (items.data[i].uuid === uuid) {
@@ -69,6 +115,92 @@ export const useContentStore = defineStore(
                     return;
                 }
             }
+        }
+
+        // TODO: generalize, give array
+        function deleleSubItem(parentUuid: string, uuid: string): void {
+            const parent = getItem(parentUuid);
+            if (!parent) {
+                return;
+            }
+            for (let i = 0; i < parent.subitems.length; i++) {
+                if (parent.subitems[i].uuid === uuid) {
+                    parent.subitems.splice(i, 1);
+                    return;
+                }
+            }
+        }
+
+        // TODO: generalize, give array
+        function moveItemUp(uuid: string): void {
+            let idx = getItemIdx(uuid);
+            if (idx === -1) {
+                console.error("Item could not be found.");
+                return;
+            }
+            if (idx === 0) {
+                // Item at the end of bounds.
+                return;
+            }
+            let item = items.data[idx];
+            items.data.splice(idx, 1);
+            items.data.splice(idx-1, 0, item);
+        }
+
+        // TODO: generalize, give array
+        function moveSubItemUp(parentUuid:string, uuid: string): void {
+            const parent = getItem(parentUuid);
+            if (!parent) {
+                return;
+            }
+            let idx = getSubItemIdx(parentUuid, uuid);
+            if (idx === -1) {
+                console.error("Item could not be found.");
+                return;
+            }
+            if (idx === 0) {
+                // Item at the end of bounds.
+                return;
+            }
+            let subitem = parent.subitems[idx];
+            parent.subitems.splice(idx, 1);
+            parent.subitems.splice(idx-1, 0, subitem);
+        }
+
+        // TODO: generalize, give array
+        function moveItemDown(uuid: string): void {
+            let idx = getItemIdx(uuid);
+            if (idx === -1) {
+                console.error("Item could not be found.");
+                return;
+            }
+            if (idx === items.data.length-1) {
+                // Item at the end of bounds.
+                return;
+            }
+            const item = items.data[idx];
+            items.data.splice(idx, 1);
+            items.data.splice(idx+1, 0, item);
+        }
+
+        // TODO: generalize, give array
+        function moveSubItemDown(parentUuid: string, uuid: string): void {
+            const parent = getItem(parentUuid);
+            if (!parent) {
+                return;
+            }
+            let idx = getSubItemIdx(parentUuid, uuid);
+            if (idx === -1) {
+                console.error("Item could not be found.");
+                return;
+            }
+            if (idx === parent.subitems.length-1) {
+                // Item at the end of bounds.
+                return;
+            }
+            const subitem = parent.subitems[idx];
+            parent.subitems.splice(idx, 1);
+            parent.subitems.splice(idx+1, 0, subitem);
         }
 
         return {
@@ -86,7 +218,15 @@ export const useContentStore = defineStore(
             items,
             getItems,
             getItem,
+            getSubItem,
             deleteItem,
+            deleleSubItem,
+            getItemIdx,
+            getSubItemIdx,
+            moveItemUp,
+            moveSubItemUp,
+            moveItemDown,
+            moveSubItemDown,
         };
     },
     {
