@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { useContentStore } from "@/stores/content";
+// Core
 import { DIMENSIONS, in_mm } from "@/components/cvDimensions";
+// Stores
+import { useContentStore } from "@/stores/content";
 import { useSettingsStore } from "@/stores/settings";
 
 interface Props {

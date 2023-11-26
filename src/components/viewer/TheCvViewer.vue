@@ -1,18 +1,20 @@
 <script setup lang="ts">
-import TheCvFooter from "@/components/TheCvFooter.vue";
-import VerticalLine from "@/elements/VerticalLine.vue";
-import ProfilePicture from "@/elements/ProfilePicture.vue";
-import { useContentStore } from "@/stores/content";
-import { useSettingsStore } from "@/stores/settings";
-import { DIMENSIONS, in_mm } from "./cvDimensions";
+import TheCvFooter from "./TheCvFooter.vue";
 import TheCvViewerItem from "./TheCvViewerItem.vue";
-import { Category } from "./TimelineItem";
 import TheCvViewerSectionHeading from "./TheCvViewerSectionHeading.vue";
-import { mdiCogOutline, mdiHeartOutline, mdiSchoolOutline } from "@mdi/js";
 import TheCvViewerPersonal from "./TheCvViewerPersonal.vue";
 import TheCvViewerItemSpacer from "./TheCvViewerItemSpacer.vue";
+// Elements
+import VerticalLine from "@/elements/VerticalLine.vue";
+import ProfilePicture from "@/elements/ProfilePicture.vue";
+// Core
+import { DIMENSIONS, in_mm } from "@/components/cvDimensions";
+import { Category } from "@/components/TimelineItem";
+// Stores
+import { useContentStore } from "@/stores/content";
+// Other
+import { mdiCogOutline, mdiHeartOutline, mdiSchoolOutline, mdiTranslate } from "@mdi/js";
 
-const settings = useSettingsStore();
 const content = useContentStore();
 
 const bisWidth_mm = 3;
@@ -43,7 +45,6 @@ function getL3Width(): number {
                 <TheCvViewerPersonal />
                 <div class="pProfilePicture"></div>
                 <TheCvViewerSectionHeading title="Werdegang" :path="mdiSchoolOutline" />
-                <TheCvViewerItemSpacer :height_mm="10"/>
                 <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.WERDEGANG)" :item="item" />
             </div>
         </div>
@@ -53,6 +54,8 @@ function getL3Width(): number {
                 <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)" :item="item" />
                 <TheCvViewerSectionHeading title="Engagement" :path="mdiHeartOutline" />
                 <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)" :item="item" />
+                <TheCvViewerSectionHeading title="Sprachen" :path="mdiTranslate" />
+                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.SPRACHE)" :item="item" />
             </div>
         </div>
     </div>
@@ -78,7 +81,7 @@ function getL3Width(): number {
         [l2] v-bind("in_mm(bisWidth_mm)")
         [l3] v-bind("in_mm(getL3Width())")
         [timeline] v-bind("in_mm(DIMENSIONS.timelineMargin_mm*2)")
-        [r1] 40mm
+        [r1] v-bind("in_mm(DIMENSIONS.itemBullitWidth_mm)")
         [r2] 1fr;
     padding-top: v-bind("in_mm(DIMENSIONS.a4padding_t_mm)");
     padding-right: v-bind("in_mm(DIMENSIONS.a4padding_r_mm)");

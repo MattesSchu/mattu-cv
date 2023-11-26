@@ -2,6 +2,7 @@ export enum Category {
     WERDEGANG,
     AUSBILDUNG,
     ENGAGEMENT,
+    SPRACHE,
 }
 
 export interface TimelineItemSub {
@@ -30,7 +31,10 @@ export interface TimelineItem {
     category: Category;
     location: string;
     text: string;
+    showDates: boolean;
     start: Date;
+    showEnd: boolean;
+    untilToday: boolean;
     end?: Date;
     image?: string;
     subitems: TimelineItemSub[];

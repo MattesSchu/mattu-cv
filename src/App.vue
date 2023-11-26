@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import TheCvContent from "@/components/content/TheCvContent.vue";
+import TheCvViewer from "@/components/viewer/TheCvViewer.vue";
+// Stores
+import { useSettingsStore } from "@/stores/settings";
+// Other
 import { onMounted, onUnmounted } from "vue";
-import TheCvContent from "./components/TheCvContent.vue";
-import TheCvViewer from "./components/TheCvViewer.vue";
-import { useSettingsStore } from "./stores/settings";
 
 const settings = useSettingsStore();
 

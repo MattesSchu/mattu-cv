@@ -9,11 +9,6 @@ const settingsStore = useSettingsStore();
             <label for="favcolor">Select your favorite color:</label>
             <input type="color" id="favcolor" v-model="settingsStore.color" />
         </div>
-        <div class="vLinePosition">
-            <!-- TODO: mas, connect this slider -->
-            <label for="vLinePosition">Vertical Line Position:</label>
-            <input type="range" id="vLinePosition" min="0" max="210" v-model="settingsStore.vLinePositionX_mm" />
-        </div>
         <!-- TODO: mas, add all DIMENSIONS -->
     </div>
 </template>

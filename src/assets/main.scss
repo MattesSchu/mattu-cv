@@ -2,7 +2,7 @@
 @import './elements.scss';
 
 :root {
-    --content-font-siez: .8em;
+    --content-font-siez: .9em;
 }
 
 .cvMainSectionTitle {
@@ -37,5 +37,6 @@
 .cvMainFooterText {
     color: rgb(124, 124, 124);
     font-weight: lighter;
-    font-size: 0.8em;
+    font-size: 0.7em;
+    line-height: 1.4em;
 }

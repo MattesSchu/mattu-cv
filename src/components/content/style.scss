@@ -1,0 +1,59 @@
+.cvViewerItemSectionTitle {
+    text-align: center;
+}
+
+.cvContentItemEntry {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    column-gap: 10px;
+
+    textarea,
+    input[type="text"] {
+        width: 100%;
+    }
+
+    textarea,
+    input[type="checkbox"],
+    input[type="text"] {
+        justify-self: start;
+    }
+    label {
+        justify-self: end;
+    }
+}
+
+.cvContentItem {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid black;
+}
+
+.cvViewerItemSectionTitle {
+    text-align: center;
+}
+
+.cvContentItemEntry {
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    column-gap: 10px;
+
+    textarea,
+    input[type="text"] {
+        width: 100%;
+    }
+
+    textarea,
+    input[type="checkbox"],
+    input[type="text"] {
+        justify-self: start;
+    }
+    label {
+        justify-self: end;
+    }
+}
+
+.cvContentItemFooter {
+    grid-template-columns: 1;
+    grid-template-columns: span 2;
+}

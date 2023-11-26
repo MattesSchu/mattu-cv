@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import TheCvViewerItemSpacer from './TheCvViewerItemSpacer.vue';
+// Core
+import { DIMENSIONS, in_mm } from '@/components/cvDimensions';
+// Elements
 import MyIcon from '@/elements/MyIcon.vue';
-import { DIMENSIONS, in_mm } from './cvDimensions';
-import cogOutline from "./cog-outline.svg";
 interface Props {
     title: string;
     path: string;
@@ -13,6 +15,7 @@ const imageWidth = 50;
 <template>
     <MyIcon class="cvViewerSectionHeaderImage" :path="path" :width="60" :height="60" />
     <div class="cvViewerSectionHeaderTitle">{{ props.title }}</div>
+    <TheCvViewerItemSpacer :height_mm="DIMENSIONS.sectionSpacerTitle_mm" />
 </template>
 <style scoped lang="scss">
 .cvViewerSectionHeaderImage {

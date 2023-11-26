@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// Stores
 import { useContentStore } from "@/stores/content";
 import { useSettingsStore } from "@/stores/settings";
 
@@ -27,8 +28,8 @@ const settings = useSettingsStore();
 </template>
 <style scoped lang="scss">
 .cvPersonal {
-    margin-top: 40px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     grid-column: r1 / -1;
     display: grid;
     grid-template-columns: [left] 1fr [right] 5fr;

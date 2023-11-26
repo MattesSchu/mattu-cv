@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import TheCvContentItemSub from "./TheCvContentItemSub.vue";
+// Stores
 import { useContentStore } from "@/stores/content";
-import type { TimelineItem } from "./TimelineItem";
+// Other
 import { v4 as uuidv4 } from "uuid";
 import { ref } from "vue";
-import TheCvContentItemSub from "./TheCvContentItemSub.vue";
 
 interface Props {
     uuid: string;
@@ -13,7 +14,6 @@ const props = defineProps<Props>();
 const content = useContentStore();
 
 const hidden = ref(false);
-const addEnd = ref(false);
 const addImage = ref(false);
 
 function changeTitle(e: Event): void {
@@ -133,8 +133,7 @@ function changeEnd(e: Event): void {
     }
     if (input && input.value) {
         item.end = new Date(input.value);
-    }
-    else {
+    } else {
         item.end = undefined;
     }
 }
@@ -162,6 +161,69 @@ function changeImage(e: Event): void {
     }
 }
 
+function getShowEnd(): boolean {
+    const item = content.getItem(props.uuid);
+    if (!item) {
+        return true;
+    }
+    return item.showEnd;
+}
+
+function changeShowEnd(e: Event): void {
+    const input = e.target as HTMLInputElement;
+    const item = content.getItem(props.uuid);
+    if (!item) {
+        return;
+    }
+    if (input && input.value) {
+        item.showEnd = input.checked;
+    } else {
+        item.showEnd = false;
+    }
+}
+
+function getShowDates(): boolean {
+    const item = content.getItem(props.uuid);
+    if (!item) {
+        return true;
+    }
+    return item.showDates;
+}
+
+function changeShowDates(e: Event): void {
+    const input = e.target as HTMLInputElement;
+    const item = content.getItem(props.uuid);
+    if (!item) {
+        return;
+    }
+    if (input && input.value) {
+        item.showDates = input.checked;
+    } else {
+        item.showDates = false;
+    }
+}
+
+function getUntilToday(): boolean {
+    const item = content.getItem(props.uuid);
+    if (!item) {
+        return true;
+    }
+    return item.untilToday;
+}
+
+function changeUntilToday(e: Event) {
+    const input = e.target as HTMLInputElement;
+    const item = content.getItem(props.uuid);
+    if (!item) {
+        return;
+    }
+    if (input && input.value) {
+        item.untilToday = input.checked;
+    } else {
+        item.untilToday = false;
+    }
+}
+
 function addSubItem(): void {
     const item = content.getItem(props.uuid);
     if (!item) {
@@ -173,7 +235,7 @@ function addSubItem(): void {
 </script>
 <template>
     <div class="cvContentItem">
-        <h2 class="cvViewerItemSectionTitle">Item</h2>
+        <h2 class="cvViewerItemSectionTitle">{{ getTitle() }}</h2>
         <div class="cvContentItemEntry">
             <label :for="'inputTitle_' + props.uuid">Titel</label>
             <input type="text" id="'inputTitle_' + props.id" @input="changeTitle" :value="getTitle()" />
@@ -191,20 +253,56 @@ function addSubItem(): void {
             <input type="text" id="'inputLocation_' + props.id" @input="changeLocation" :value="getLocation()" />
         </div>
         <div v-if="!hidden" class="cvContentItemEntry">
+            <label :for="'inputShowDates_' + props.uuid">Datum anzeigen</label>
+            <input type="checkbox" id="'inputShowDates_' + props.id" @input="changeShowDates" :value="getShowDates()" />
+        </div>
+        <div v-if="!hidden" class="cvContentItemEntry">
             <label :for="'inputStart_' + props.uuid">Start</label>
-            <input type="date" id="'inputStart_' + props.id" @input="changeStart" :value="getStart()" />
+            <input
+                type="date"
+                id="'inputStart_' + props.id"
+                :disabled="!getShowDates()"
+                @input="changeStart"
+                :value="getStart()"
+            />
         </div>
         <div v-if="!hidden" class="cvContentItemEntry">
-            <label :for="'inputEndSwitch_' + props.uuid">Ende</label>
-            <input type="checkbox" id="'inputEndSwitch_' + props.id" v-model="addEnd" />
-            <label v-if="addEnd" :for="'inputEnd_' + props.uuid">Ende</label>
-            <input v-if="addEnd" type="date" id="'inputEnd_' + props.id" @input="changeEnd" :value="getEnd()" />
+            <label :for="'inputShowEnd_' + props.uuid">Zeige Ende an</label>
+            <input
+                type="checkbox"
+                id="'inputShowEnd_' + props.id"
+                :disabled="!getShowDates()"
+                @input="changeShowEnd"
+                :value="getShowEnd()"
+            />
+            <label :for="'inputUntilToday_' + props.uuid">Bis Heute</label>
+            <input
+                type="checkbox"
+                id="'inputUntilToday_' + props.id"
+                :disabled="!getShowDates() || !getShowEnd()"
+                @input="changeUntilToday"
+                :value="getUntilToday()"
+            />
+            <label :for="'inputEnd_' + props.uuid">Ende</label>
+            <input
+                type="date"
+                id="'inputEnd_' + props.id"
+                :disabled="!getShowDates() || !getShowEnd()"
+                @input="changeEnd"
+                :value="getEnd()"
+            />
         </div>
         <div v-if="!hidden" class="cvContentItemEntry">
-            <label :for="'inputImageSwitch_' + props.uuid">Bild</label>
+            <label :for="'inputImageSwitch_' + props.uuid">Bild anzeigen</label>
             <input type="checkbox" id="'inputImageSwitch_' + props.id" v-model="addImage" />
-            <label v-if="addImage" :for="'inputImage_' + props.uuid">Bild</label>
-            <input v-if="addImage" type="file" accept="image/*" id="'inputImage_' + props.id" @change="changeImage" />
+            <label :for="'inputImage_' + props.uuid">Bild</label>
+            <input
+                type="file"
+                accept="image/*"
+                id="'inputImage_' + props.id"
+                :disabled="!addImage"
+                @change="changeImage"
+            />
         </div>
         <TheCvContentItemSub
             v-if="!hidden"
@@ -222,39 +320,5 @@ function addSubItem(): void {
     </div>
 </template>
 <style scoped lang="scss">
-.cvContentItem {
-    width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid black;
-}
-
-.cvViewerItemSectionTitle {
-    text-align: center;
-}
-
-.cvContentItemEntry {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    column-gap: 10px;
-
-    textarea,
-    input[type="text"] {
-        width: 100%;
-    }
-
-    textarea,
-    input[type="checkbox"],
-    input[type="text"] {
-        justify-self: start;
-    }
-    label {
-        justify-self: end;
-    }
-}
-
-.cvContentItemFooter {
-    grid-template-columns: 1;
-    grid-template-columns: span 2;
-}
+@import url("./style.scss");
 </style>

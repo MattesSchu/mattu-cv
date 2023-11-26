@@ -1,13 +1,12 @@
 import { Category, type TimelineItem, type TimelineItemSub } from "@/components/TimelineItem";
 import { defineStore } from "pinia";
 import { reactive, ref } from "vue";
-import { v4 as uuidv4 } from "uuid";
 
 interface ReactiveItems {
     data: TimelineItem[];
 }
 
-function serializeState(state: Record<string, any>): string {
+export function serializeState(state: Record<string, any>): string {
     // Convert Date objects to strings
     return JSON.stringify(state, (key, value) => {
         if (value instanceof Date) {
@@ -25,6 +24,17 @@ function deserializeState(value: string): Record<string, any> {
         }
         return value;
     });
+}
+
+export function saveContent(): void {
+    const content = useContentStore();
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(serializeState(content.$state))
+    const downloadAnchorNode = document.createElement('a')
+    downloadAnchorNode.setAttribute("href", dataStr)
+    downloadAnchorNode.setAttribute("download", "contentState.json")
+    document.body.appendChild(downloadAnchorNode)
+    downloadAnchorNode.click()
+    downloadAnchorNode.remove()
 }
 
 export const useContentStore = defineStore(

@@ -1,8 +1,12 @@
 <script setup lang="ts">
+// Core
+import { type TimelineItemSub } from "@/components/TimelineItem";
+// Elements
 import MyIcon from "@/elements/MyIcon.vue";
+// Store
 import { useContentStore } from "@/stores/content";
+// Other
 import { mdiCircleSlice8 } from "@mdi/js";
-import { type TimelineItemSub } from "./TimelineItem";
 
 interface Props {
     item: TimelineItemSub;
