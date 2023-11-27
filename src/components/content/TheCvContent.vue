@@ -100,22 +100,22 @@ function addItem(category: Category): void {
         </div>
         <div class="cvContentSection">
             <h2>Werdegang</h2>
-            <TheCvContentItem v-for="(item, idx) in content.getItems(Category.WERDEGANG)" :uuid="item.uuid" />
+            <TheCvContentItem v-for="(item, idx) in content.getItems(Category.WERDEGANG)" v-bind:key="idx" :uuid="item.uuid" />
             <button @click="addItem(Category.WERDEGANG)">Add Item</button>
         </div>
         <div class="cvContentSection">
             <h2>Erfahrung</h2>
-            <TheCvContentItem v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)" :uuid="item.uuid" />
+            <TheCvContentItem v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)" v-bind:key="idx" :uuid="item.uuid" />
             <button @click="addItem(Category.AUSBILDUNG)">Add Item</button>
         </div>
         <div class="cvContentSection">
             <h2>Engagement</h2>
-            <TheCvContentItem v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)" :uuid="item.uuid" />
+            <TheCvContentItem v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)" v-bind:key="idx" :uuid="item.uuid" />
             <button @click="addItem(Category.ENGAGEMENT)">Add Item</button>
         </div>
         <div class="cvContentSection">
             <h2>Sprache</h2>
-            <TheCvContentItem v-for="(item, idx) in content.getItems(Category.SPRACHE)" :uuid="item.uuid" />
+            <TheCvContentItem v-for="(item, idx) in content.getItems(Category.SPRACHE)" v-bind:key="idx" :uuid="item.uuid" />
             <button @click="addItem(Category.SPRACHE)">Add Item</button>
         </div>
     </div>
