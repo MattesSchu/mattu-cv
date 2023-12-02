@@ -2,26 +2,6 @@
     text-align: center;
 }
 
-.cvContentItemEntry {
-    display: grid;
-    grid-template-columns: 1fr 5fr;
-    column-gap: 10px;
-
-    textarea,
-    input[type="text"] {
-        width: 100%;
-    }
-
-    textarea,
-    input[type="checkbox"],
-    input[type="text"] {
-        justify-self: start;
-    }
-    label {
-        justify-self: end;
-    }
-}
-
 .cvContentItem {
     width: 100%;
     padding: 10px;
@@ -48,12 +28,41 @@
     input[type="text"] {
         justify-self: start;
     }
+
     label {
         justify-self: end;
     }
 }
 
-.cvContentItemFooter {
-    grid-template-columns: 1;
-    grid-template-columns: span 2;
+.cvContentItemHeader {
+    display: flex;
+    gap: 5px;
+    padding: 10px;
 }
+
+.cvContentItemFooter {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+    padding: 10px;
+    justify-content: right;
+}
+
+.list-move, /* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+// TODO: this is making a drop like effect. The item is falling to the right bottom of the screen.
+// .list-leave-active {
+//   position: absolute;
+// }

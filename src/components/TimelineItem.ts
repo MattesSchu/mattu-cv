@@ -31,6 +31,7 @@ export interface TimelineItem extends GeneralItem {
     title: string;
     subtitle?: string;
     category: Category;
+    idx: number;
     location: string;
     text: string;
     showDates: boolean;

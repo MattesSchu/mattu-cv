@@ -1,14 +1,20 @@
 @import 'base.css';
 
+.btnFileLabel,
 button {
     padding: 5px 10px;
- 
     background: none;
-
+    font-family: inherit;
+    font-size: 15px;
     text-align: center;
     text-decoration: none;
-
     border: 1px solid black;
+}
+
+.btnFileLabel:hover,
+button:hover {
+    background-color: rgb(233, 233, 233);
+    border: 1px solid rgb(76, 5, 104);
 }
 
 textarea {
@@ -29,6 +35,10 @@ textarea:focus {
     border-top-width: 0px;
     outline: none;
     border-bottom-color: green;
+}
+
+input[type=file] {
+    display: none;
 }
 
 input[type=url],

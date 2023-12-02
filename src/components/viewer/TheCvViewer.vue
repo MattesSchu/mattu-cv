@@ -3,7 +3,6 @@ import TheCvFooter from "./TheCvFooter.vue";
 import TheCvViewerItem from "./TheCvViewerItem.vue";
 import TheCvViewerSectionHeading from "./TheCvViewerSectionHeading.vue";
 import TheCvViewerPersonal from "./TheCvViewerPersonal.vue";
-import TheCvViewerItemSpacer from "./TheCvViewerItemSpacer.vue";
 // Elements
 import VerticalLine from "@/elements/VerticalLine.vue";
 import ProfilePicture from "@/elements/ProfilePicture.vue";
@@ -45,17 +44,17 @@ function getL3Width(): number {
                 <TheCvViewerPersonal />
                 <div class="pProfilePicture"></div>
                 <TheCvViewerSectionHeading title="Werdegang" :path="mdiSchoolOutline" />
-                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.WERDEGANG)" :key="idx" :item="item" />
+                <TheCvViewerItem v-for="(item, idx) in content.getCategoryItems(Category.WERDEGANG)" :key="idx" :item="item" />
             </div>
         </div>
         <div class="cvPage">
             <div class="cvPageContent">
                 <TheCvViewerSectionHeading title="Erfahrung" :path="mdiCogOutline" />
-                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)" :key="idx" :item="item" />
+                <TheCvViewerItem v-for="(item, idx) in content.getCategoryItems(Category.AUSBILDUNG)" :key="idx" :item="item" />
                 <TheCvViewerSectionHeading title="Engagement" :path="mdiHeartOutline" />
-                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)" :key="idx" :item="item" />
+                <TheCvViewerItem v-for="(item, idx) in content.getCategoryItems(Category.ENGAGEMENT)" :key="idx" :item="item" />
                 <TheCvViewerSectionHeading title="Sprachen" :path="mdiTranslate" />
-                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.SPRACHE)" :key="idx" :item="item" />
+                <TheCvViewerItem v-for="(item, idx) in content.getCategoryItems(Category.SPRACHE)" :key="idx" :item="item" />
             </div>
         </div>
     </div>
@@ -98,6 +97,9 @@ function getL3Width(): number {
 }
 
 @media print {
+    body {
+        background-color: white;
+    }
     .page {
         margin: 0px;
         background-color: white;
@@ -105,6 +107,10 @@ function getL3Width(): number {
     .cv {
         height: auto;
         overflow: visible;
+    }
+
+    .cvPage {
+        border-radius: 0px;
     }
 }
 </style>

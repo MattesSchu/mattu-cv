@@ -20,14 +20,14 @@ const addImage = ref(false);
 
 function changeTitle(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (input && input.value && item) {
         item.title = input.value;
     }
 }
 
 function getSubtitle(): string {
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item || !item.subtitle) {
         return "";
     }
@@ -36,7 +36,7 @@ function getSubtitle(): string {
 
 function changeSubtitle(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return;
     }
@@ -48,7 +48,7 @@ function changeSubtitle(e: Event): void {
 }
 
 function getTitle(): string {
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return "";
     }
@@ -57,7 +57,7 @@ function getTitle(): string {
 
 function changeText(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return;
     }
@@ -69,7 +69,7 @@ function changeText(e: Event): void {
 }
 
 function getText(): string {
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return "";
     }
@@ -78,7 +78,7 @@ function getText(): string {
 
 function changeLocation(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return;
     }
@@ -90,7 +90,7 @@ function changeLocation(e: Event): void {
 }
 
 function getLocation(): string {
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return "";
     }
@@ -110,7 +110,7 @@ function formatDate(date: Date): string {
 
 function changeStart(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return;
     }
@@ -120,7 +120,7 @@ function changeStart(e: Event): void {
 }
 
 function getStart(): string {
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item || !item.start || !(item.start instanceof Date)) {
         return formatDate(new Date(Date.now()));
     }
@@ -129,7 +129,7 @@ function getStart(): string {
 
 function changeEnd(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return;
     }
@@ -141,7 +141,7 @@ function changeEnd(e: Event): void {
 }
 
 function getEnd(): string {
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item || !item.end || !(item.end instanceof Date)) {
         return formatDate(new Date(Date.now()));
     }
@@ -150,7 +150,7 @@ function getEnd(): string {
 
 function changeImage(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return;
     }
@@ -164,7 +164,7 @@ function changeImage(e: Event): void {
 }
 
 function getShowEnd(): boolean {
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return true;
     }
@@ -173,7 +173,7 @@ function getShowEnd(): boolean {
 
 function changeShowEnd(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return;
     }
@@ -185,7 +185,7 @@ function changeShowEnd(e: Event): void {
 }
 
 function getShowDates(): boolean {
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return true;
     }
@@ -194,7 +194,7 @@ function getShowDates(): boolean {
 
 function changeShowDates(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return;
     }
@@ -206,7 +206,7 @@ function changeShowDates(e: Event): void {
 }
 
 function getUntilToday(): boolean {
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return true;
     }
@@ -215,7 +215,7 @@ function getUntilToday(): boolean {
 
 function changeUntilToday(e: Event) {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         return;
     }
@@ -227,7 +227,7 @@ function changeUntilToday(e: Event) {
 }
 
 function addSubItem(): void {
-    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
+    const item = content.getItem(props.uuid);
     if (!item) {
         console.error("Unable to get item from uuid");
         return;
@@ -237,7 +237,12 @@ function addSubItem(): void {
 </script>
 <template>
     <div class="cvContentItem">
-        <h2 class="cvViewerItemSectionTitle">{{ getTitle() }}</h2>
+        <div class="cvContentItemHeader">
+            <button @click="hidden = !hidden">{{ hidden ? "👀 Show" : "🙈 Hide" }}</button>
+            <button @click="content.moveItemUp(props.uuid)">⬆️ Up</button>
+            <button @click="content.moveItemDown(props.uuid)">⬇️ Down</button>
+            <h2 class="cvViewerItemSectionTitle">{{ getTitle() }}</h2>
+        </div>
         <div v-if="!hidden">
             <div class="cvContentItemEntry">
                 <label :for="'inputTitle_' + props.uuid">Titel</label>
@@ -313,23 +318,28 @@ function addSubItem(): void {
                 />
             </div>
             <div >
-                <TheCvContentItemSub
-                    v-for="(subitem, idx) in (content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem).subitems"
-                    :parent="props.uuid"
-                    :uuid="subitem.uuid"
-                    :key="idx"
-                />
+                <transition-group name="list" tag="div">
+                    <TheCvContentItemSub
+                        v-for="subitem in (content.getItem(props.uuid) as TimelineItem).subitems"
+                        :parent="props.uuid"
+                        :uuid="subitem.uuid"
+                        :key="subitem.uuid"
+                    />
+                </transition-group>
             </div>
-            <button  class="cvContentItemAddSub" @click="addSubItem()">Add Subitem</button>
+            <div class="cvContentItemSubFooter">
+                <button class="cvContentItemAddSub" @click="addSubItem()">➕ Subitem</button>
+            </div>
         </div>
         <div class="cvContentItemFooter">
-            <button @click="content.deleteItem(props.uuid, content.getItems(props.category))">Delete</button>
-            <button @click="hidden = !hidden">{{ hidden ? "Show" : "Hide" }}</button>
-            <button @click="content.moveItemUp(props.uuid, content.getItems(props.category))">Up</button>
-            <button @click="content.moveItemDown(props.uuid, content.getItems(props.category))">Down</button>
+            <button @click="content.deleteItem(props.uuid)">❌ Delete</button>
         </div>
     </div>
 </template>
 <style scoped lang="scss">
 @import url("./style.scss");
+.cvContentItemSubFooter {
+    display: flex;
+    justify-content: center;
+}
 </style>
