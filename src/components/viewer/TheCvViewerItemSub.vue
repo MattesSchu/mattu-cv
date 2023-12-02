@@ -4,7 +4,7 @@ import { type TimelineItemSub } from "@/components/TimelineItem";
 // Elements
 import MyIcon from "@/elements/MyIcon.vue";
 // Store
-import { useContentStore } from "@/stores/content";
+import { useSettingsStore } from "@/stores/settings";
 // Other
 import { mdiCircleSlice8 } from "@mdi/js";
 
@@ -12,12 +12,15 @@ interface Props {
     item: TimelineItemSub;
 }
 const props = defineProps<Props>();
-const content = useContentStore();
+const settings = useSettingsStore();
+
+const BULLIT_ICON_SIZE = 15;
 </script>
 <template>
-    <MyIcon class="cvTimelineIcon" :path="mdiCircleSlice8" color="black" :width="15" :height="15" />
-    <!-- TOOD: make dashes Work -->
-    <!-- <span class="cvViewerItemSubDashes">- -</span> -->
+    <div class="cvBullitContainer">
+        <MyIcon class="cvTimelineIcon" :path="mdiCircleSlice8" color="black" :width="BULLIT_ICON_SIZE" :height="BULLIT_ICON_SIZE" />
+        <div class="cvViewerItemSubDashes"><span>- -</span></div>
+    </div>
     <div
         :class="{ cvViewerItemSubTitel: !props.item.split, cvViewerItemSubTitelSplit: props.item.split }"
         class="cvMainBullitTitle"
@@ -33,17 +36,26 @@ const content = useContentStore();
     </div>
 </template>
 <style scoped lang="scss">
+.cvBullitContainer {
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr v-bind("BULLIT_ICON_SIZE + 'px'") 1fr;
+    grid-column-start: timeline;
+}
 .cvTimelineIcon {
     width: 100%;
-    grid-column-start: timeline;
-    // TODO: bullit at the top?
-    justify-content: start;
-    align-self: start;
+    grid-column-start: 2;
     z-index: 1;
 }
-// TODO: Dashes
-// .cvViewerItemSubDashes {
-// }
+
+.cvViewerItemSubDashes {
+    grid-column-start: 3;
+    justify-self: center;
+    align-self: start;
+    font-size: var(--content-font-siez);
+    line-height: 1.2;
+    color: v-bind("settings.color");
+}
 .cvViewerItemSubTitel {
     grid-column-start: r1;
     grid-column-end: span end;

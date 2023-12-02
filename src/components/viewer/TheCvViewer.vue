@@ -85,6 +85,7 @@ function getL3Width(): number {
     padding-top: v-bind("in_mm(DIMENSIONS.a4padding_t_mm)");
     padding-right: v-bind("in_mm(DIMENSIONS.a4padding_r_mm)");
     padding-left: v-bind("in_mm(DIMENSIONS.a4padding_l_mm)");
+    row-gap: 2px;
 }
 
 .cvTitle {

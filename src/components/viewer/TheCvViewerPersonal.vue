@@ -34,6 +34,7 @@ const settings = useSettingsStore();
     display: grid;
     grid-template-columns: [left] 1fr [right] 5fr;
     column-gap: 10px;
+    row-gap: 2px;
 }
 
 .cvPersonalLeft {
