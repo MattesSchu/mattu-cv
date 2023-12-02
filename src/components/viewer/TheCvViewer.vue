@@ -41,21 +41,21 @@ function getL3Width(): number {
         <ProfilePicture />
         <div class="cvPage">
             <div class="cvPageContent">
-                <div class="cvTitle">{{ content.name }}</div>
+                <div class="cvTitle">{{ content.personalInformation.name }}</div>
                 <TheCvViewerPersonal />
                 <div class="pProfilePicture"></div>
                 <TheCvViewerSectionHeading title="Werdegang" :path="mdiSchoolOutline" />
-                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.WERDEGANG)" :item="item" />
+                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.WERDEGANG)" :key="idx" :item="item" />
             </div>
         </div>
         <div class="cvPage">
             <div class="cvPageContent">
                 <TheCvViewerSectionHeading title="Erfahrung" :path="mdiCogOutline" />
-                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)" :item="item" />
+                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)" :key="idx" :item="item" />
                 <TheCvViewerSectionHeading title="Engagement" :path="mdiHeartOutline" />
-                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)" :item="item" />
+                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)" :key="idx" :item="item" />
                 <TheCvViewerSectionHeading title="Sprachen" :path="mdiTranslate" />
-                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.SPRACHE)" :item="item" />
+                <TheCvViewerItem v-for="(item, idx) in content.getItems(Category.SPRACHE)" :key="idx" :item="item" />
             </div>
         </div>
     </div>

@@ -5,9 +5,11 @@ import { useContentStore } from "@/stores/content";
 // Other
 import { v4 as uuidv4 } from "uuid";
 import { ref } from "vue";
+import type { Category, TimelineItem } from "../TimelineItem";
 
 interface Props {
     uuid: string;
+    category: Category;
 }
 
 const props = defineProps<Props>();
@@ -18,14 +20,14 @@ const addImage = ref(false);
 
 function changeTitle(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (input && input.value && item) {
         item.title = input.value;
     }
 }
 
 function getSubtitle(): string {
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item || !item.subtitle) {
         return "";
     }
@@ -34,7 +36,7 @@ function getSubtitle(): string {
 
 function changeSubtitle(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return;
     }
@@ -46,7 +48,7 @@ function changeSubtitle(e: Event): void {
 }
 
 function getTitle(): string {
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return "";
     }
@@ -55,7 +57,7 @@ function getTitle(): string {
 
 function changeText(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return;
     }
@@ -67,7 +69,7 @@ function changeText(e: Event): void {
 }
 
 function getText(): string {
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return "";
     }
@@ -76,7 +78,7 @@ function getText(): string {
 
 function changeLocation(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return;
     }
@@ -88,7 +90,7 @@ function changeLocation(e: Event): void {
 }
 
 function getLocation(): string {
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return "";
     }
@@ -108,7 +110,7 @@ function formatDate(date: Date): string {
 
 function changeStart(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return;
     }
@@ -118,7 +120,7 @@ function changeStart(e: Event): void {
 }
 
 function getStart(): string {
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item || !item.start || !(item.start instanceof Date)) {
         return formatDate(new Date(Date.now()));
     }
@@ -127,7 +129,7 @@ function getStart(): string {
 
 function changeEnd(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return;
     }
@@ -139,7 +141,7 @@ function changeEnd(e: Event): void {
 }
 
 function getEnd(): string {
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item || !item.end || !(item.end instanceof Date)) {
         return formatDate(new Date(Date.now()));
     }
@@ -148,7 +150,7 @@ function getEnd(): string {
 
 function changeImage(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return;
     }
@@ -162,7 +164,7 @@ function changeImage(e: Event): void {
 }
 
 function getShowEnd(): boolean {
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return true;
     }
@@ -171,7 +173,7 @@ function getShowEnd(): boolean {
 
 function changeShowEnd(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return;
     }
@@ -183,7 +185,7 @@ function changeShowEnd(e: Event): void {
 }
 
 function getShowDates(): boolean {
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return true;
     }
@@ -192,7 +194,7 @@ function getShowDates(): boolean {
 
 function changeShowDates(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return;
     }
@@ -204,7 +206,7 @@ function changeShowDates(e: Event): void {
 }
 
 function getUntilToday(): boolean {
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return true;
     }
@@ -213,7 +215,7 @@ function getUntilToday(): boolean {
 
 function changeUntilToday(e: Event) {
     const input = e.target as HTMLInputElement;
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         return;
     }
@@ -225,7 +227,7 @@ function changeUntilToday(e: Event) {
 }
 
 function addSubItem(): void {
-    const item = content.getItem(props.uuid);
+    const item = content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem;
     if (!item) {
         console.error("Unable to get item from uuid");
         return;
@@ -236,86 +238,95 @@ function addSubItem(): void {
 <template>
     <div class="cvContentItem">
         <h2 class="cvViewerItemSectionTitle">{{ getTitle() }}</h2>
-        <div class="cvContentItemEntry">
-            <label :for="'inputTitle_' + props.uuid">Titel</label>
-            <input type="text" id="'inputTitle_' + props.id" @input="changeTitle" :value="getTitle()" />
+        <div v-if="!hidden">
+            <div class="cvContentItemEntry">
+                <label :for="'inputTitle_' + props.uuid">Titel</label>
+                <input type="text" id="'inputTitle_' + props.id" @input="changeTitle" :value="getTitle()" />
+            </div>
+            <div class="cvContentItemEntry">
+                <label :for="'inputSubtitle_' + props.uuid">Untertitel</label>
+                <input type="text" id="'inputSubtitle_' + props.id" @input="changeSubtitle" :value="getSubtitle()" />
+            </div>
+            <div  class="cvContentItemEntry">
+                <label :for="'inputText_' + props.uuid">Inhalt</label>
+                <textarea type="text" id="'inputText_' + props.id" @input="changeText" :value="getText()"></textarea>
+            </div>
+            <div  class="cvContentItemEntry">
+                <label :for="'inputLocation_' + props.uuid">Ort</label>
+                <input type="text" id="'inputLocation_' + props.id" @input="changeLocation" :value="getLocation()" />
+            </div>
+            <div  class="cvContentItemEntry">
+                <label :for="'inputShowDates_' + props.uuid">Datum anzeigen</label>
+                <input
+                    type="checkbox"
+                    id="'inputShowDates_' + props.id"
+                    @input="changeShowDates"
+                    :value="getShowDates()"
+                />
+            </div>
+            <div  class="cvContentItemEntry">
+                <label :for="'inputStart_' + props.uuid">Start</label>
+                <input
+                    type="date"
+                    id="'inputStart_' + props.id"
+                    :disabled="!getShowDates()"
+                    @input="changeStart"
+                    :value="getStart()"
+                />
+            </div>
+            <div  class="cvContentItemEntry">
+                <label :for="'inputShowEnd_' + props.uuid">Zeige Ende an</label>
+                <input
+                    type="checkbox"
+                    id="'inputShowEnd_' + props.id"
+                    :disabled="!getShowDates()"
+                    @input="changeShowEnd"
+                    :value="getShowEnd()"
+                />
+                <label :for="'inputUntilToday_' + props.uuid">Bis Heute</label>
+                <input
+                    type="checkbox"
+                    id="'inputUntilToday_' + props.id"
+                    :disabled="!getShowDates() || !getShowEnd()"
+                    @input="changeUntilToday"
+                    :value="getUntilToday()"
+                />
+                <label :for="'inputEnd_' + props.uuid">Ende</label>
+                <input
+                    type="date"
+                    id="'inputEnd_' + props.id"
+                    :disabled="!getShowDates() || !getShowEnd()"
+                    @input="changeEnd"
+                    :value="getEnd()"
+                />
+            </div>
+            <div  class="cvContentItemEntry">
+                <label :for="'inputImageSwitch_' + props.uuid">Bild anzeigen</label>
+                <input type="checkbox" id="'inputImageSwitch_' + props.id" v-model="addImage" />
+                <label :for="'inputImage_' + props.uuid">Bild</label>
+                <input
+                    type="file"
+                    accept="image/*"
+                    id="'inputImage_' + props.id"
+                    :disabled="!addImage"
+                    @change="changeImage"
+                />
+            </div>
+            <div >
+                <TheCvContentItemSub
+                    v-for="(subitem, idx) in (content.getItem(props.uuid, content.getItems(props.category)) as TimelineItem).subitems"
+                    :parent="props.uuid"
+                    :uuid="subitem.uuid"
+                    :key="idx"
+                />
+            </div>
+            <button  class="cvContentItemAddSub" @click="addSubItem()">Add Subitem</button>
         </div>
-        <div class="cvContentItemEntry">
-            <label :for="'inputSubtitle_' + props.uuid">Untertitel</label>
-            <input type="text" id="'inputSubtitle_' + props.id" @input="changeSubtitle" :value="getSubtitle()" />
-        </div>
-        <div v-if="!hidden" class="cvContentItemEntry">
-            <label :for="'inputText_' + props.uuid">Inhalt</label>
-            <textarea type="text" id="'inputText_' + props.id" @input="changeText" :value="getText()"></textarea>
-        </div>
-        <div v-if="!hidden" class="cvContentItemEntry">
-            <label :for="'inputLocation_' + props.uuid">Ort</label>
-            <input type="text" id="'inputLocation_' + props.id" @input="changeLocation" :value="getLocation()" />
-        </div>
-        <div v-if="!hidden" class="cvContentItemEntry">
-            <label :for="'inputShowDates_' + props.uuid">Datum anzeigen</label>
-            <input type="checkbox" id="'inputShowDates_' + props.id" @input="changeShowDates" :value="getShowDates()" />
-        </div>
-        <div v-if="!hidden" class="cvContentItemEntry">
-            <label :for="'inputStart_' + props.uuid">Start</label>
-            <input
-                type="date"
-                id="'inputStart_' + props.id"
-                :disabled="!getShowDates()"
-                @input="changeStart"
-                :value="getStart()"
-            />
-        </div>
-        <div v-if="!hidden" class="cvContentItemEntry">
-            <label :for="'inputShowEnd_' + props.uuid">Zeige Ende an</label>
-            <input
-                type="checkbox"
-                id="'inputShowEnd_' + props.id"
-                :disabled="!getShowDates()"
-                @input="changeShowEnd"
-                :value="getShowEnd()"
-            />
-            <label :for="'inputUntilToday_' + props.uuid">Bis Heute</label>
-            <input
-                type="checkbox"
-                id="'inputUntilToday_' + props.id"
-                :disabled="!getShowDates() || !getShowEnd()"
-                @input="changeUntilToday"
-                :value="getUntilToday()"
-            />
-            <label :for="'inputEnd_' + props.uuid">Ende</label>
-            <input
-                type="date"
-                id="'inputEnd_' + props.id"
-                :disabled="!getShowDates() || !getShowEnd()"
-                @input="changeEnd"
-                :value="getEnd()"
-            />
-        </div>
-        <div v-if="!hidden" class="cvContentItemEntry">
-            <label :for="'inputImageSwitch_' + props.uuid">Bild anzeigen</label>
-            <input type="checkbox" id="'inputImageSwitch_' + props.id" v-model="addImage" />
-            <label :for="'inputImage_' + props.uuid">Bild</label>
-            <input
-                type="file"
-                accept="image/*"
-                id="'inputImage_' + props.id"
-                :disabled="!addImage"
-                @change="changeImage"
-            />
-        </div>
-        <TheCvContentItemSub
-            v-if="!hidden"
-            v-for="(subitem, idx) in content.getItem(props.uuid)?.subitems"
-            :parent="props.uuid"
-            :uuid="subitem.uuid"
-        />
-        <button v-if="!hidden" class="cvContentItemAddSub" @click="addSubItem()">Add Subitem</button>
         <div class="cvContentItemFooter">
-            <button @click="content.deleteItem(props.uuid)">Delete</button>
+            <button @click="content.deleteItem(props.uuid, content.getItems(props.category))">Delete</button>
             <button @click="hidden = !hidden">{{ hidden ? "Show" : "Hide" }}</button>
-            <button @click="content.moveItemUp(props.uuid)">Up</button>
-            <button @click="content.moveItemDown(props.uuid)">Down</button>
+            <button @click="content.moveItemUp(props.uuid, content.getItems(props.category))">Up</button>
+            <button @click="content.moveItemDown(props.uuid, content.getItems(props.category))">Down</button>
         </div>
     </div>
 </template>

@@ -5,8 +5,11 @@ export enum Category {
     SPRACHE,
 }
 
-export interface TimelineItemSub {
+export interface GeneralItem {
     uuid: string;
+}
+
+export interface TimelineItemSub extends GeneralItem {
     title: string;
     subtitle: string;
     text?: string;
@@ -24,8 +27,7 @@ export interface TimelineItemSub {
  *  @field {string} image
  *  @field {TimelineItemSub[]} subitems 
  */
-export interface TimelineItem {
-    uuid: string;
+export interface TimelineItem extends GeneralItem {
     title: string;
     subtitle?: string;
     category: Category;

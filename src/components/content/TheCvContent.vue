@@ -4,7 +4,7 @@ import TheSettings from "./TheSettings.vue";
 // Core
 import { Category } from "@/components/TimelineItem";
 // Stores
-import { saveContent, useContentStore } from "@/stores/content";
+import { saveContent, useContentStore, type PersonalInformation } from "@/stores/content";
 import { useSettingsStore } from "@/stores/settings";
 // Other
 import type { TimelineItem } from "@/components/TimelineItem";
@@ -18,7 +18,7 @@ function handleFileChange(e: Event): void {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = (e) => {
-            content.profilePicture = e.target?.result as string;
+            content.personalInformation.profilePicture = e.target?.result as string;
         };
         reader.readAsDataURL(input.files[0]);
     }
@@ -53,81 +53,103 @@ function addItem(category: Category): void {
             <div class="fileUpload">
                 <input type="file" accept="image/*" id="myFile" name="filename" @change="handleFileChange" />
             </div>
-            <img v-if="content.profilePicture" :src="content.profilePicture" width="20" />
+            <img
+                v-if="content.personalInformation.profilePicture"
+                :src="content.personalInformation.profilePicture"
+                width="20"
+            />
         </div>
         <div class="cvContentSection">
             <h2>Persönliche Informationen</h2>
             <div class="cvContentItemEntry">
                 <label for="inputName">Name</label>
-                <input type="text" id="inputName" v-model="content.name" />
+                <input type="text" id="inputName" v-model="content.personalInformation.name" />
             </div>
             <div class="cvContentItemEntry">
                 <label for="inputStrasse">Strasse Hausnummer</label>
-                <input type="text" id="inputStrasse" v-model="content.address" />
+                <input type="text" id="inputStrasse" v-model="content.personalInformation.address" />
             </div>
             <div class="cvContentItemEntry">
                 <label for="inputOrt">Ort Postleitzahl</label>
-                <input type="text" id="inputOrt" v-model="content.postal" />
+                <input type="text" id="inputOrt" v-model="content.personalInformation.postal" />
             </div>
             <div class="cvContentItemEntry">
                 <label for="inputGeburtsdatum">Geburtsdatum</label>
-                <input type="date" id="inputGeburtsdatum" v-model="content.birthday" />
+                <input type="date" id="inputGeburtsdatum" v-model="content.personalInformation.birthday" />
             </div>
             <div class="cvContentItemEntry">
                 <label for="inputGeburtsort">Geburtsort</label>
-                <input type="text" id="inputGeburtsort" v-model="content.birthplace" />
+                <input type="text" id="inputGeburtsort" v-model="content.personalInformation.birthplace" />
             </div>
             <div class="cvContentItemEntry">
                 <label for="inputFamilienstand">Familienstand</label>
-                <input type="text" id="inputFamilienstand" v-model="content.family" />
+                <input type="text" id="inputFamilienstand" v-model="content.personalInformation.family" />
             </div>
             <div class="cvContentItemEntry">
                 <label for="inputTelefon">Telefon</label>
-                <input type="text" id="inputTelefon" v-model="content.phone" />
+                <input type="text" id="inputTelefon" v-model="content.personalInformation.phone" />
             </div>
             <div class="cvContentItemEntry">
                 <label for="inputEmail">E-Mail</label>
-                <input type="email" id="inputEmail" v-model="content.mail" />
+                <input type="email" id="inputEmail" v-model="content.personalInformation.mail" />
             </div>
             <div class="cvContentItemEntry">
                 <label for="inputHomepage">Homepage</label>
-                <input type="url" id="inputHomepage" v-model="content.homepage" />
+                <input type="url" id="inputHomepage" v-model="content.personalInformation.homepage" />
             </div>
             <div class="cvContentItemEntry">
                 <label for="inputXing">Xing</label>
-                <input type="url" id="inputXing" v-model="content.xing" />
+                <input type="url" id="inputXing" v-model="content.personalInformation.xing" />
             </div>
         </div>
         <div class="cvContentSection">
             <h2>Werdegang</h2>
-            <TheCvContentItem v-for="(item, idx) in content.getItems(Category.WERDEGANG)" v-bind:key="idx" :uuid="item.uuid" />
+            <TheCvContentItem
+                v-for="(item, idx) in content.getItems(Category.WERDEGANG)"
+                v-bind:key="idx"
+                :uuid="item.uuid"
+                :category="Category.WERDEGANG"
+            />
             <button @click="addItem(Category.WERDEGANG)">Add Item</button>
         </div>
         <div class="cvContentSection">
             <h2>Erfahrung</h2>
-            <TheCvContentItem v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)" v-bind:key="idx" :uuid="item.uuid" />
+            <TheCvContentItem
+                v-for="(item, idx) in content.getItems(Category.AUSBILDUNG)"
+                v-bind:key="idx"
+                :uuid="item.uuid"
+                :category="Category.AUSBILDUNG"
+            />
             <button @click="addItem(Category.AUSBILDUNG)">Add Item</button>
         </div>
         <div class="cvContentSection">
             <h2>Engagement</h2>
-            <TheCvContentItem v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)" v-bind:key="idx" :uuid="item.uuid" />
+            <TheCvContentItem
+                v-for="(item, idx) in content.getItems(Category.ENGAGEMENT)"
+                v-bind:key="idx"
+                :uuid="item.uuid"
+                :category="Category.ENGAGEMENT"
+            />
             <button @click="addItem(Category.ENGAGEMENT)">Add Item</button>
         </div>
         <div class="cvContentSection">
             <h2>Sprache</h2>
-            <TheCvContentItem v-for="(item, idx) in content.getItems(Category.SPRACHE)" v-bind:key="idx" :uuid="item.uuid" />
+            <TheCvContentItem
+                v-for="(item, idx) in content.getItems(Category.SPRACHE)"
+                v-bind:key="idx"
+                :uuid="item.uuid"
+                :category="Category.SPRACHE"
+            />
             <button @click="addItem(Category.SPRACHE)">Add Item</button>
         </div>
     </div>
 </template>
 <style scoped lang="scss">
- @import url("./style.scss");
+@import url("./style.scss");
 .cvContent {
     width: 100%;
     height: 100vh;
     padding: 20px;
-
-    border-right: 2px dashed black;
 
     display: v-bind("settings.printModeActive ? 'none' : 'block'");
     visibility: v-bind("settings.printModeActive ? 'hidden' : 'vsisble'");

@@ -16,12 +16,12 @@ const settings = useSettingsStore();
 <template>
     <div class="cvFooter cvMainFooterText">
         <div class="cvFooterContact">
-            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.name }}
-            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.address }}
-            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.postal }}
+            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.personalInformation.name }}
+            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.personalInformation.address }}
+            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.personalInformation.postal }}
             <span :style="{ color: settings.color }">&#x2012;</span> <br />
-            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.phone }}
-            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.mail }}
+            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.personalInformation.phone }}
+            <span :style="{ color: settings.color }">&#x2012;</span> {{ content.personalInformation.mail }}
             <span :style="{ color: settings.color }">&#x2012;</span>
         </div>
         <div class="cvFooterPagination">Seite {{ props.page }} von 2</div>

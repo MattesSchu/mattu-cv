@@ -7,7 +7,7 @@ const content = useContentStore();
 const settings = useSettingsStore();
 </script>
 <template>
-    <img v-if="content.profilePicture" class="profilePicture" :src="content.profilePicture" />
+    <img v-if="content.personalInformation.profilePicture" class="profilePicture" :src="content.personalInformation.profilePicture" />
 </template>
 <style scoped lang="scss">
 .profilePicture {

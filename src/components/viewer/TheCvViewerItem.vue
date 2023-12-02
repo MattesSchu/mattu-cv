@@ -35,7 +35,7 @@ function getMonthStr(date: Date): string {
     <div class="cvViewerItemSubtitle" v-if="props.item.subtitle">{{ props.item.subtitle }}</div>
     <TheCvViewerItemSpacer v-if="props.item.subtitle" :height_mm="DIMENSIONS.itemSpacerTitle_mm"/>
     <div class="cvViewerItemText cvMainSectionText">{{ props.item.text }}</div>
-    <TheCvViewerItemSub v-for="(item, key) in props.item.subitems" :item="item" />
+    <TheCvViewerItemSub v-for="(item, key) in props.item.subitems" :key="key" :item="item" />
     <TheCvViewerItemSpacer :height_mm="DIMENSIONS.itemSpacerAfter_mm" />
 </template>
 <style scoped lang="scss">

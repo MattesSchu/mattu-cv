@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useContentStore } from "@/stores/content";
+import type { TimelineItem, TimelineItemSub } from "../TimelineItem";
 interface Props {
     parent: string;
     uuid: string;
@@ -8,8 +9,19 @@ interface Props {
 const props = defineProps<Props>();
 const content = useContentStore();
 
+function getSubItems(): TimelineItemSub[] {
+    const item = content.getItem(props.parent, content.items.data) as TimelineItem;
+    return item.subitems;
+}
+
+function getItem(): TimelineItemSub {
+    const item = content.getItem(props.parent, content.items.data) as TimelineItem;
+    const subItem = content.getItem(props.uuid, item.subitems) as TimelineItemSub;
+    return subItem;
+}
+
 function getTitle(): string {
-    const item = content.getSubItem(props.parent, props.uuid);
+    const item = getItem();
     if (!item) {
         return "";
     }
@@ -18,14 +30,14 @@ function getTitle(): string {
 
 function changeTitle(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getSubItem(props.parent, props.uuid);
+    const item =  getItem();
     if (input && input.value && item) {
         item.title = input.value;
     }
 }
 
 function getText(): string {
-    const item = content.getSubItem(props.parent, props.uuid);
+    const item = getItem();
     if (!item || !item.text) {
         return "";
     }
@@ -34,14 +46,14 @@ function getText(): string {
 
 function changeText(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getSubItem(props.parent, props.uuid);
+    const item = getItem();
     if (input && input.value && item) {
         item.text = input.value;
     }
 }
 
 function getSplit(): boolean {
-    const item = content.getSubItem(props.parent, props.uuid);
+    const item = getItem();
     if (!item) {
         return false;
     }
@@ -50,7 +62,7 @@ function getSplit(): boolean {
 
 function changeSplit(e: Event): void {
     const input = e.target as HTMLInputElement;
-    const item = content.getSubItem(props.parent, props.uuid);
+    const item = getItem();
     if (input && input.value && item) {
         item.split = input.checked;
     }
@@ -72,9 +84,9 @@ function changeSplit(e: Event): void {
             :value="getSplit()"
         />
         <div class="cvContentItemSubFooter">
-            <button @click="content.deleleSubItem(props.parent, props.uuid)">Delete</button>
-            <button @click="content.moveSubItemUp(props.parent, props.uuid)">Up</button>
-            <button @click="content.moveSubItemDown(props.parent, props.uuid)">Down</button>
+            <button @click="content.deleteItem(props.uuid, getSubItems())">Delete</button>
+            <button @click="content.moveItemUp(props.uuid, getSubItems())">Up</button>
+            <button @click="content.moveItemDown(props.uuid, getSubItems())">Down</button>
         </div>
     </div>
 </template>

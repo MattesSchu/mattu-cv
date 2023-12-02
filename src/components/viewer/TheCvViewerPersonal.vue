@@ -11,19 +11,19 @@ const settings = useSettingsStore();
     <div class="cvPersonal">
         <div class="cvPersonalAnschriftTitle cvPersonalLeft cvMainBullitTitle">Anschrift</div>
         <div class="cvPersonalAnschriftItems cvPersonalRight cvMainSectionText">
-            <div>{{ content.address }}</div>
-            <div>{{ content.postal }}</div>
+            <div>{{ content.personalInformation.address }}</div>
+            <div>{{ content.personalInformation.postal }}</div>
         </div>
         <div class="cvPersonalTelefonTitle cvPersonalLeft cvMainBullitTitle">Telefon</div>
-        <div class="cvPersonalTelefonNumber cvPersonalRight cvMainSectionText">{{ content.phone }}</div>
+        <div class="cvPersonalTelefonNumber cvPersonalRight cvMainSectionText">{{ content.personalInformation.phone }}</div>
         <div class="cvPersonalEMailTitle cvPersonalLeft cvMainBullitTitle">E-Mail</div>
-        <div class="cvPersonalEMailText cvPersonalRight cvMainSectionText ">{{ content.mail }}</div>
+        <div class="cvPersonalEMailText cvPersonalRight cvMainSectionText ">{{ content.personalInformation.mail }}</div>
         <div class="cvPersonalXingTitle cvPersonalLeft cvMainBullitTitle">Xing</div>
-        <div class="cvPersonalXingUrl cvPersonalRight cvMainSectionText">{{ content.xing }}</div>
+        <div class="cvPersonalXingUrl cvPersonalRight cvMainSectionText">{{ content.personalInformation.xing }}</div>
         <div class="cvPersonalFamilyTitle cvPersonalLeft cvMainBullitTitle">Familienstand</div>
-        <div class="cvPersonalFamilyText cvPersonalRight cvMainSectionText">{{ content.family }}</div>
+        <div class="cvPersonalFamilyText cvPersonalRight cvMainSectionText">{{ content.personalInformation.family }}</div>
         <div class="cvPersonalBirthTitle cvPersonalLeft cvMainBullitTitle">Geburt</div>
-        <div class="cvPersonalBirthText cvPersonalRight cvMainSectionText">{{ content.birthday }} in {{ content.birthplace }}</div>
+        <div class="cvPersonalBirthText cvPersonalRight cvMainSectionText">{{ content.personalInformation.birthday }} in {{ content.personalInformation.birthplace }}</div>
     </div>
 </template>
 <style scoped lang="scss">

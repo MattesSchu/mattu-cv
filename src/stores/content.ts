@@ -1,9 +1,23 @@
-import { Category, type TimelineItem, type TimelineItemSub } from "@/components/TimelineItem";
+import { Category, type GeneralItem, type TimelineItem, type TimelineItemSub } from "@/components/TimelineItem";
 import { defineStore } from "pinia";
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 
 interface ReactiveItems {
     data: TimelineItem[];
+}
+
+export interface PersonalInformation {
+    name: string;
+    profilePicture: string;
+    address: string;
+    postal: number;
+    birthday: Date;
+    birthplace: string;
+    phone: string;
+    mail: string;
+    homepage: string;
+    xing: string;
+    family: string;
 }
 
 export function serializeState(state: Record<string, any>): string {
@@ -28,29 +42,42 @@ function deserializeState(value: string): Record<string, any> {
 
 export function saveContent(): void {
     const content = useContentStore();
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(serializeState(content.$state))
-    const downloadAnchorNode = document.createElement('a')
-    downloadAnchorNode.setAttribute("href", dataStr)
-    downloadAnchorNode.setAttribute("download", "contentState.json")
-    document.body.appendChild(downloadAnchorNode)
-    downloadAnchorNode.click()
-    downloadAnchorNode.remove()
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(serializeState(content.$state));
+    const downloadAnchorNode = document.createElement("a");
+    downloadAnchorNode.setAttribute("href", dataStr);
+    downloadAnchorNode.setAttribute("download", "contentState.json");
+    document.body.appendChild(downloadAnchorNode);
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+}
+
+interface ContentState {
+    personalInformation: PersonalInformation;
+    items: ReactiveItems;
+    getItems: (category: Category) => TimelineItem[];
+    getItem: (uuid: string, items: GeneralItem[]) => GeneralItem | undefined;
+    getItemIdx: (uuid: string, items: GeneralItem[]) => number;
+    deleteItem: (uuid: string, items: GeneralItem[]) => void;
+    moveItemUp: (uuid: string, items: GeneralItem[]) => void;
+    moveItemDown: (uuid: string, items: GeneralItem[]) => void;
 }
 
 export const useContentStore = defineStore(
     "content",
-    () => {
-        const name = ref("");
-        const profilePicture = ref<string | null>(null);
-        const address = ref("");
-        const postal = ref("");
-        const birthday = ref<Date>();
-        const birthplace = ref("");
-        const phone = ref("");
-        const mail = ref("");
-        const homepage = ref("");
-        const xing = ref("");
-        const family = ref("");
+    (): ContentState => {
+        const personalInformation = reactive<PersonalInformation>({
+            name: "",
+            address: "",
+            birthday: new Date(),
+            birthplace: "",
+            family: "",
+            homepage: "",
+            mail: "",
+            phone: "",
+            postal: -1,
+            profilePicture: "",
+            xing: "",
+        });
         const items = reactive<ReactiveItems>({ data: [] });
 
         function getItems(category: Category): TimelineItem[] {
@@ -63,35 +90,22 @@ export const useContentStore = defineStore(
             return res;
         }
 
-        function getItem(uuid: string): TimelineItem | undefined {
-            for (let i = 0; i < items.data.length; i++) {
-                if (items.data[i].uuid === uuid) {
-                    return items.data[i];
+        function getItem(
+            uuid: string,
+            items: TimelineItem[] | TimelineItemSub[],
+        ): TimelineItem | TimelineItemSub | undefined {
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].uuid === uuid) {
+                    return items[i];
                 }
             }
             return undefined;
         }
 
-        function getSubItem(parentUuid: string, subItemUuid: string): TimelineItemSub | undefined {
-            const parent = getItem(parentUuid);
-            if (!parent) {
-                return undefined;
-            }
-            for (let i = 0; i < parent.subitems.length; i++) {
-                if (parent.subitems[i].uuid === subItemUuid) {
-                    return parent.subitems[i];
-                }
-            }
-            return undefined;
-        }
-
-        // TODO: generalize, give array
-        function getItemIdx(uuid: string): number {
+        function getItemIdx(uuid: string, items: GeneralItem[]): number {
             let idx = -1;
-            for (let i = 0; i < items.data.length; i++)
-            {
-                if (items.data[i].uuid === uuid)
-                {
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].uuid === uuid) {
                     idx = i;
                     break;
                 }
@@ -99,51 +113,18 @@ export const useContentStore = defineStore(
             return idx;
         }
 
-        // TODO: generalize, give array
-        function getSubItemIdx(parentUuid: string, uuid: string): number {
-            const parent = getItem(parentUuid);
-            if (!parent) {
-                return -1;
-            }
-            let idx = -1;
-            for (let i = 0; i < parent.subitems.length; i++)
-            {
-                if (parent.subitems[i].uuid === uuid)
-                {
-                    idx = i;
-                    break;
-                }
-            }
-            return idx;
-        }
-
-        // TODO: generalize, give array
-        function deleteItem(uuid: string): void {
-            for (let i = 0; i < items.data.length; i++) {
-                if (items.data[i].uuid === uuid) {
-                    items.data.splice(i, 1);
+        function deleteItem(uuid: string, items: GeneralItem[]): void {
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].uuid === uuid) {
+                    items.splice(i, 1);
                     return;
                 }
             }
         }
 
         // TODO: generalize, give array
-        function deleleSubItem(parentUuid: string, uuid: string): void {
-            const parent = getItem(parentUuid);
-            if (!parent) {
-                return;
-            }
-            for (let i = 0; i < parent.subitems.length; i++) {
-                if (parent.subitems[i].uuid === uuid) {
-                    parent.subitems.splice(i, 1);
-                    return;
-                }
-            }
-        }
-
-        // TODO: generalize, give array
-        function moveItemUp(uuid: string): void {
-            let idx = getItemIdx(uuid);
+        function moveItemUp(uuid: string, items: GeneralItem[]): void {
+            const idx = getItemIdx(uuid, items);
             if (idx === -1) {
                 console.error("Item could not be found.");
                 return;
@@ -152,91 +133,36 @@ export const useContentStore = defineStore(
                 // Item at the end of bounds.
                 return;
             }
-            let item = items.data[idx];
-            items.data.splice(idx, 1);
-            items.data.splice(idx-1, 0, item);
+            const item = items[idx];
+            items.splice(idx, 1);
+            items.splice(idx - 1, 0, item);
         }
 
         // TODO: generalize, give array
-        function moveSubItemUp(parentUuid:string, uuid: string): void {
-            const parent = getItem(parentUuid);
-            if (!parent) {
-                return;
-            }
-            let idx = getSubItemIdx(parentUuid, uuid);
+        function moveItemDown(uuid: string, items: GeneralItem[]): void {
+            const idx = getItemIdx(uuid, items);
             if (idx === -1) {
                 console.error("Item could not be found.");
                 return;
             }
-            if (idx === 0) {
+            if (idx === items.length - 1) {
                 // Item at the end of bounds.
                 return;
             }
-            let subitem = parent.subitems[idx];
-            parent.subitems.splice(idx, 1);
-            parent.subitems.splice(idx-1, 0, subitem);
-        }
-
-        // TODO: generalize, give array
-        function moveItemDown(uuid: string): void {
-            let idx = getItemIdx(uuid);
-            if (idx === -1) {
-                console.error("Item could not be found.");
-                return;
-            }
-            if (idx === items.data.length-1) {
-                // Item at the end of bounds.
-                return;
-            }
-            const item = items.data[idx];
-            items.data.splice(idx, 1);
-            items.data.splice(idx+1, 0, item);
-        }
-
-        // TODO: generalize, give array
-        function moveSubItemDown(parentUuid: string, uuid: string): void {
-            const parent = getItem(parentUuid);
-            if (!parent) {
-                return;
-            }
-            let idx = getSubItemIdx(parentUuid, uuid);
-            if (idx === -1) {
-                console.error("Item could not be found.");
-                return;
-            }
-            if (idx === parent.subitems.length-1) {
-                // Item at the end of bounds.
-                return;
-            }
-            const subitem = parent.subitems[idx];
-            parent.subitems.splice(idx, 1);
-            parent.subitems.splice(idx+1, 0, subitem);
+            const item = items[idx];
+            items.splice(idx, 1);
+            items.splice(idx + 1, 0, item);
         }
 
         return {
-            name,
-            profilePicture,
-            address,
-            postal,
-            birthday,
-            birthplace,
-            phone,
-            mail,
-            homepage,
-            xing,
-            family,
+            personalInformation,
             items,
             getItems,
             getItem,
-            getSubItem,
             deleteItem,
-            deleleSubItem,
             getItemIdx,
-            getSubItemIdx,
             moveItemUp,
-            moveSubItemUp,
             moveItemDown,
-            moveSubItemDown,
         };
     },
     {
