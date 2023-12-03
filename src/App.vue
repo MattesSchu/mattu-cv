@@ -27,16 +27,16 @@ onUnmounted(() => {
 </script>
 <template>
     <nav>
-        <button @click="showViewer = !showViewer">Toggle</button>
+        <button class="btnFixed" @click="showViewer = !showViewer">Toggle</button>
     </nav>
     <main>
         <TheCvContent class="appContent" />
         <TheCvViewer class="appViewer" />
     </main>
 </template>
-<style scoped>
+<style scoped lang="scss">
 main {
-    width: 100%;
+    width: 100vw;
     height: 100%;
     display: grid;
 
@@ -47,30 +47,34 @@ main {
 nav {
     display: none;
     visibility: hidden;
+    width: 100%;
 }
 
 @media only screen and (max-width: 420mm) {
     nav {
-        display: block;
+        display: flex;
         visibility: visible;
-        position: fixed;
         right: 10px;
         top: 10px;
         z-index: 1;
+        justify-content: center;
+        padding: 5px;
     }
 
     main {
-        display: inline;
+        display: flex;
+        overflow: scroll;
+        justify-content: center;
     }
     .appContent {
-        display: v-bind("showViewer ? 'none' : 'inline'");
+        display: v-bind("showViewer ? 'none' : 'block'");
         visibility: v-bind("showViewer ? 'invisible' : 'visible'");
     }
 
     .appViewer {
         display: v-bind("showViewer ? 'block' : 'none'");
         visibility: v-bind("showViewer ? 'visible' : 'invisible'");
-        width: 210mm;
+        overflow: scroll;
     }
 }
 

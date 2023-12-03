@@ -96,7 +96,7 @@ function handleLoadFile(e: Event): void {
                 <input type="text" id="inputStrasse" v-model="content.personalInformation.address" />
             </div>
             <div class="cvContentItemEntry">
-                <label for="inputOrt">Ort Postleitzahl</label>
+                <label for="inputOrt">Plz. Ort</label>
                 <input type="text" id="inputOrt" v-model="content.personalInformation.postal" />
             </div>
             <div class="cvContentItemEntry">

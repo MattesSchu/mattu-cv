@@ -72,8 +72,8 @@ function changeSplit(e: Event): void {
 <template>
     <div class="cvContentItemSub">
         <div class="cvContentItemHeader">
-            <button @click="content.moveSubItemUp(props.parent, props.uuid)">⬆️ Up</button>
-            <button @click="content.moveSubItemDown(props.parent, props.uuid)"> ⬇️ Down</button>
+            <button @click="content.moveSubItemUp(props.parent, props.uuid)">⬆️</button>
+            <button @click="content.moveSubItemDown(props.parent, props.uuid)">⬇️</button>
             <h3 class="cvContentItemSubSectionTitle">{{ getTitle() !== "" ? getTitle() : "Subitem" }}</h3>
         </div>
             <div class="cvContentItemEntry">

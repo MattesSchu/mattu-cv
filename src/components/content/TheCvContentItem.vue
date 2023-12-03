@@ -238,9 +238,9 @@ function addSubItem(): void {
 <template>
     <div class="cvContentItem">
         <div class="cvContentItemHeader">
-            <button @click="hidden = !hidden">{{ hidden ? "👀 Show" : "🙈 Hide" }}</button>
-            <button @click="content.moveItemUp(props.uuid)">⬆️ Up</button>
-            <button @click="content.moveItemDown(props.uuid)">⬇️ Down</button>
+            <button @click="hidden = !hidden">{{ hidden ? "👀" : "🙈" }}</button>
+            <button @click="content.moveItemUp(props.uuid)">⬆️</button>
+            <button @click="content.moveItemDown(props.uuid)">⬇️</button>
             <h2 class="cvViewerItemSectionTitle">{{ getTitle() }}</h2>
         </div>
         <div v-if="!hidden">
