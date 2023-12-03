@@ -36,7 +36,6 @@ onUnmounted(() => {
 </template>
 <style scoped lang="scss">
 main {
-    width: 100vw;
     height: 100%;
     display: grid;
 
@@ -53,25 +52,26 @@ nav {
 @media only screen and (max-width: 420mm) {
     nav {
         display: flex;
+        justify-content: center;
         visibility: visible;
         right: 10px;
         top: 10px;
         z-index: 1;
-        justify-content: center;
         padding: 5px;
     }
 
     main {
-        display: flex;
+        width: 100vw;
         overflow: scroll;
-        justify-content: center;
     }
     .appContent {
+        width: 100vw;
         display: v-bind("showViewer ? 'none' : 'block'");
         visibility: v-bind("showViewer ? 'invisible' : 'visible'");
     }
 
     .appViewer {
+        position: relative;
         display: v-bind("showViewer ? 'block' : 'none'");
         visibility: v-bind("showViewer ? 'visible' : 'invisible'");
         overflow: scroll;

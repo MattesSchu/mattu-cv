@@ -69,6 +69,7 @@ function getL3Width(): number {
 
 .cvPage {
     height: 297mm;
+    width: 210mm;
     border-radius: 10px;
     background-color: white;
 }
