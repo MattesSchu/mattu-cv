@@ -39,6 +39,7 @@ export interface TimelineItem extends GeneralItem {
     showEnd: boolean;
     untilToday: boolean;
     end?: Date;
+    // TODO: small timeline image
     image?: string;
     subitems: TimelineItemSub[];
 }

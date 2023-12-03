@@ -20,6 +20,8 @@ const settings = useSettingsStore();
 function getMonthStr(date: Date): string {
     return date.toLocaleString("de-DE", { month: "long" });
 }
+
+function showUntilToday(): boolean {}
 </script>
 <template>
     <div v-if="props.item.showDates" class="cvViewerItemStart">
@@ -31,10 +33,12 @@ function getMonthStr(date: Date): string {
         <span :style="{ color: settings.color }">&#x2012;</span>
     </div>
     <div v-if="props.item.showDates && props.item.showEnd" class="cvViewerItemEnd">
-        {{ props.item.end && props.item.showEnd ? props.item.end.getFullYear() : "heute" }}<br /><span
-            class="cvViewerItemEndMonth"
-            >{{ props.item.end ? getMonthStr(props.item.end) : "" }}</span
-        >
+        <span v-if="props.item.untilToday">heute</span>
+        <span v-else-if="props.item.end">{{ props.item.end.getFullYear() }}</span>
+        <br />
+        <span v-if="!props.item.untilToday" class="cvViewerItemEndMonth">{{
+            props.item.end ? getMonthStr(props.item.end) : ""
+        }}</span>
     </div>
     <MyIcon class="cvTimelineIcon" :path="mdiCircleSlice8" :width="30" :height="30" color="black" />
     <div class="cvViewerItemTitleAndLocation">

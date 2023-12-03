@@ -9,6 +9,8 @@ import { useSettingsStore } from "@/stores/settings";
 // Other
 import type { TimelineItem } from "@/components/TimelineItem";
 import { v4 as uuidv4 } from "uuid";
+import MyIcon from "@/elements/MyIcon.vue";
+import { mdiGithub } from "@mdi/js";
 
 const content = useContentStore();
 const settings = useSettingsStore();
@@ -57,10 +59,18 @@ function handleLoadFile(e: Event): void {
 <template>
     <div class="cvContent">
         <div class="cvContentActionSection">
-            <button @click="saveContent()">Speichern</button>
-            <label for="loadContent" class="btnFileLabel">Laden</label>
+            <button @click="saveContent()">💾 Speichern</button>
+            <label for="loadContent" class="btnFileLabel">📂 Laden</label>
             <input type="file" accept=".json" id="loadContent" name="content" @change="handleLoadFile" />
-            <button @click="content.reset()">Reset</button>
+            <button @click="content.reset()">🔄️ Reset</button>
+            <a href="https://github.com/MattesSchu/mattu-cv#mattu-cv" target="_blank"
+                ><MyIcon
+                    :path="mdiGithub"
+                    :width="30"
+                    :height="30"
+                    color="black"
+                    style=" height: 100%"
+            /></a>
         </div>
         <div class="cvContentSection">
             <h2>Einstellungen</h2>

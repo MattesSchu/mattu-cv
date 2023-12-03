@@ -16,7 +16,6 @@ const props = defineProps<Props>();
 const content = useContentStore();
 
 const hidden = ref(false);
-const addImage = ref(false);
 
 function changeTitle(e: Event): void {
     const input = e.target as HTMLInputElement;
@@ -303,18 +302,6 @@ function addSubItem(): void {
                     :disabled="!getShowDates() || !getShowEnd()"
                     @input="changeEnd"
                     :value="getEnd()"
-                />
-            </div>
-            <div  class="cvContentItemEntry">
-                <label :for="'inputImageSwitch_' + props.uuid">Bild anzeigen</label>
-                <input type="checkbox" id="'inputImageSwitch_' + props.id" v-model="addImage" />
-                <label :for="'inputImage_' + props.uuid">Bild</label>
-                <input
-                    type="file"
-                    accept="image/*"
-                    id="'inputImage_' + props.id"
-                    :disabled="!addImage"
-                    @change="changeImage"
                 />
             </div>
             <div >

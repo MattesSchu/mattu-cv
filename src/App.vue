@@ -27,7 +27,7 @@ onUnmounted(() => {
 </script>
 <template>
     <nav>
-        <button class="btnFixed" @click="showViewer = !showViewer">Toggle</button>
+        <button class="btnFixed" @click="showViewer = !showViewer">{{ !showViewer ? "📃 Viewer" : "✍️ Inhalt" }}</button>
     </nav>
     <main>
         <TheCvContent class="appContent" />

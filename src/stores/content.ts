@@ -58,7 +58,7 @@ interface ContentState {
 
 function initPersonalInformation(): PersonalInformation {
     return {
-        name: "Vor- und Nachname",
+        name: "Mein Name",
         address: "Straße und Hausnummer",
         birthday: new Date(Date.now()),
         birthplace: "Ort",
