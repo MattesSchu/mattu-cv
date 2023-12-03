@@ -29,7 +29,7 @@ const imageWidth = 50;
 }
 
 .cvViewerSectionHeaderTitle {
-    grid-column-start: r1;
+    grid-column: r1 / span 2;
     align-self: center;
     font-size: var(--font-size-h2);
     text-transform: uppercase;
