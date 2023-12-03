@@ -21,7 +21,6 @@ function getMonthStr(date: Date): string {
     return date.toLocaleString("de-DE", { month: "long" });
 }
 
-function showUntilToday(): boolean {}
 </script>
 <template>
     <div v-if="props.item.showDates" class="cvViewerItemStart">
