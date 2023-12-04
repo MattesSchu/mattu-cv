@@ -24,7 +24,7 @@ function getMonthStr(date: Date): string {
 </script>
 <template>
     <div v-if="props.item.showDates" class="cvViewerItemStart">
-        {{ props.item.start.getFullYear() }}<br /><span class="cvViewerItemStartMonth">{{
+        {{ props.item.start.getFullYear() }}<br /><span class="cvViewerItemMonth">{{
             getMonthStr(props.item.start)
         }}</span>
     </div>
@@ -32,10 +32,10 @@ function getMonthStr(date: Date): string {
         <span :style="{ color: settings.color }">&#x2012;</span>
     </div>
     <div v-if="props.item.showDates && props.item.showEnd" class="cvViewerItemEnd">
-        <span v-if="props.item.untilToday">heute</span>
+        <span v-if="props.item.untilToday" style="white-space: nowrap">heute</span>
         <span v-else-if="props.item.end">{{ props.item.end.getFullYear() }}</span>
         <br />
-        <span v-if="!props.item.untilToday" class="cvViewerItemEndMonth">{{
+        <span v-if="!props.item.untilToday" class="cvViewerItemMonth">{{
             props.item.end ? getMonthStr(props.item.end) : ""
         }}</span>
     </div>
@@ -46,7 +46,6 @@ function getMonthStr(date: Date): string {
             >&hairsp;/&hairsp;{{ props.item.location }}</span
         >
     </div>
-    <div class="cvViewerItemImage"><img :src="props.item.image" width="40" /></div>
     <div class="cvViewerItemSubtitle" v-if="props.item.subtitle">{{ props.item.subtitle }}</div>
     <TheCvViewerItemSpacer v-if="props.item.subtitle" :height_mm="DIMENSIONS.itemSpacerTitle_mm" />
     <div class="cvViewerItemText cvMainSectionText">{{ props.item.text }}</div>
@@ -61,32 +60,24 @@ function getMonthStr(date: Date): string {
     grid-column-start: l1;
 }
 
-.cvViewerItemStartMonth {
+.cvViewerItemMonth {
     align-self: top;
     text-align: center;
-    // TODO: general font
-    font-size: 6pt;
+    font-size: 5pt;
     position: absolute;
     transform: translateX(-50%);
     line-height: 0.8;
 }
 
 .cvViewerItemBis {
+    grid-column-start: l2;
     align-self: center;
     text-align: center;
 }
 .cvViewerItemEnd {
+    grid-column-start: l3;
     align-self: center;
     text-align: center;
-}
-
-.cvViewerItemEndMonth {
-    text-align: center;
-    // TODO: general font
-    font-size: 6pt;
-    position: absolute;
-    transform: translateX(-50%);
-    line-height: 0.8;
 }
 
 .cvTimelineIcon {
