@@ -1,11 +1,18 @@
 <script setup lang="ts">
 // Stores
 import { useContentStore } from "@/stores/content";
-import { useSettingsStore } from "@/stores/settings";
+import { getFormattedDateStr } from "@/components/formatDate";
 
 const content = useContentStore();
-const settings = useSettingsStore();
 
+function getBirthDayString(): string {
+    const birthday = content.personalInformation.birthday;
+    if (!(birthday instanceof Date)) {
+        console.error("Unable to get real Date type from store.");
+        return getFormattedDateStr(new Date(Date.now()));
+    }
+    return getFormattedDateStr(birthday);
+}
 </script>
 <template>
     <div class="cvPersonal">
@@ -15,15 +22,21 @@ const settings = useSettingsStore();
             <div>{{ content.personalInformation.postal }}</div>
         </div>
         <div class="cvPersonalTelefonTitle cvPersonalLeft cvMainBullitTitle">Telefon</div>
-        <div class="cvPersonalTelefonNumber cvPersonalRight cvMainSectionText">{{ content.personalInformation.phone }}</div>
+        <div class="cvPersonalTelefonNumber cvPersonalRight cvMainSectionText">
+            {{ content.personalInformation.phone }}
+        </div>
         <div class="cvPersonalEMailTitle cvPersonalLeft cvMainBullitTitle">E-Mail</div>
-        <div class="cvPersonalEMailText cvPersonalRight cvMainSectionText ">{{ content.personalInformation.mail }}</div>
+        <div class="cvPersonalEMailText cvPersonalRight cvMainSectionText">{{ content.personalInformation.mail }}</div>
         <div class="cvPersonalXingTitle cvPersonalLeft cvMainBullitTitle">Xing</div>
         <div class="cvPersonalXingUrl cvPersonalRight cvMainSectionText">{{ content.personalInformation.xing }}</div>
         <div class="cvPersonalFamilyTitle cvPersonalLeft cvMainBullitTitle">Familienstand</div>
-        <div class="cvPersonalFamilyText cvPersonalRight cvMainSectionText">{{ content.personalInformation.family }}</div>
+        <div class="cvPersonalFamilyText cvPersonalRight cvMainSectionText">
+            {{ content.personalInformation.family }}
+        </div>
         <div class="cvPersonalBirthTitle cvPersonalLeft cvMainBullitTitle">Geburt</div>
-        <div class="cvPersonalBirthText cvPersonalRight cvMainSectionText">{{ content.personalInformation.birthday }} in {{ content.personalInformation.birthplace }}</div>
+        <div class="cvPersonalBirthText cvPersonalRight cvMainSectionText">
+            {{ getBirthDayString() }} in {{ content.personalInformation.birthplace }}
+        </div>
     </div>
 </template>
 <style scoped lang="scss">

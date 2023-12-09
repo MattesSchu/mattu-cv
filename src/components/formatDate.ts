@@ -1,0 +1,11 @@
+/**
+ * Format given date string.
+ * @param date to string
+ * @returns formatted date as DD.MM.YYYY
+ */
+export function getFormattedDateStr(date: Date): string {
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear().toString();
+    return `${day}.${month}.${year}`;
+}

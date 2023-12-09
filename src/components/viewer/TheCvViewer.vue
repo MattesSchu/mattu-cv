@@ -3,6 +3,7 @@ import TheCvFooter from "./TheCvFooter.vue";
 import TheCvViewerItem from "./TheCvViewerItem.vue";
 import TheCvViewerSectionHeading from "./TheCvViewerSectionHeading.vue";
 import TheCvViewerPersonal from "./TheCvViewerPersonal.vue";
+import { getLeftWidth, getL1Width, getL3Width, bisWidth_mm } from "./viewerWidths";
 // Elements
 import VerticalLine from "@/elements/VerticalLine.vue";
 import ProfilePicture from "@/elements/ProfilePicture.vue";
@@ -16,21 +17,6 @@ import { mdiCogOutline, mdiHeartOutline, mdiSchoolOutline, mdiTranslate } from "
 
 const content = useContentStore();
 
-const bisWidth_mm = 3;
-
-function getLeftWidth(): number {
-    return DIMENSIONS.timelinePosition_x_mm - DIMENSIONS.a4padding_l_mm - DIMENSIONS.timelineMargin_mm;
-}
-
-function getL1Width(): number {
-    let leftWidth = getLeftWidth();
-    return (leftWidth - bisWidth_mm) / 2;
-}
-
-function getL3Width(): number {
-    let leftWidth = getLeftWidth();
-    return (leftWidth - bisWidth_mm) / 2;
-}
 </script>
 <template>
     <div class="cv">
@@ -42,7 +28,6 @@ function getL3Width(): number {
             <div class="cvPageContent">
                 <div class="cvTitle">{{ content.personalInformation.name }}</div>
                 <TheCvViewerPersonal />
-                <div class="pProfilePicture"></div>
                 <TheCvViewerSectionHeading title="Werdegang" :path="mdiSchoolOutline" />
                 <TheCvViewerItem v-for="(item, idx) in content.getCategoryItems(Category.WERDEGANG)" :key="idx" :item="item" />
             </div>

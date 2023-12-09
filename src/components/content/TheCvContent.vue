@@ -55,6 +55,37 @@ function handleLoadFile(e: Event): void {
         reader.readAsText(input.files[0]);
     }
 }
+
+function formatDate(date: Date): string {
+    let month = "" + (date.getMonth() + 1);
+    let day = "" + date.getDate();
+    let year = "" + date.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return year + "-" + month + "-" + day;
+}
+
+function getBirthday(): string {
+    const birthday = content.personalInformation.birthday;
+    if (!birthday || !(birthday instanceof Date)) {
+        return formatDate(new Date(Date.now()));
+    }
+    return formatDate(birthday);
+}
+
+function changeBirthday(e: Event): void {
+    const input = e.target as HTMLInputElement;
+    if (!content.personalInformation.birthday) {
+        return;
+    }
+    if (input && input.value) {
+        content.personalInformation.birthday = new Date(input.value);
+    } else {
+        content.personalInformation.birthday = new Date(Date.now());
+    }
+}
 </script>
 <template>
     <div class="cvContent">
@@ -111,7 +142,7 @@ function handleLoadFile(e: Event): void {
             </div>
             <div class="cvContentItemEntry">
                 <label for="inputGeburtsdatum">Geburtsdatum</label>
-                <input type="date" id="inputGeburtsdatum" v-model="content.personalInformation.birthday" />
+                <input type="date" id="inputGeburtsdatum"  @input="changeBirthday" :value="getBirthday" />
             </div>
             <div class="cvContentItemEntry">
                 <label for="inputGeburtsort">Geburtsort</label>
@@ -175,7 +206,7 @@ function handleLoadFile(e: Event): void {
             <button @click="addItem(Category.ENGAGEMENT)">➕ Item</button>
         </div>
         <div class="cvContentSection">
-            <h2>Sprache</h2>
+            <h2>Sprachen</h2>
             <TransitionGroup name="list" tag="div">
                 <TheCvContentItem
                     v-for="item in content.getCategoryItems(Category.SPRACHE)"

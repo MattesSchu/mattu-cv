@@ -233,6 +233,32 @@ function addSubItem(): void {
     }
     item.subitems.push({ uuid: uuidv4(), title: "", subtitle: "", split: false });
 }
+
+function handleFileChange(e: Event): void {
+    const input = e.target as HTMLInputElement;
+    const item = content.getItem(props.uuid);
+    if (!item) {
+        return;
+    }
+    if (!input || !input.files || input.files.length === 0) {
+        return;
+    }
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            item.image = e.target?.result as string;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function removeImage(): void {
+    const item = content.getItem(props.uuid);
+    if (!item) {
+        return;
+    }
+    item.image = undefined;
+}
 </script>
 <template>
     <div class="cvContentItem">
@@ -245,44 +271,44 @@ function addSubItem(): void {
         <div v-if="!hidden">
             <div class="cvContentItemEntry">
                 <label :for="'inputTitle_' + props.uuid">Titel</label>
-                <input type="text" id="'inputTitle_' + props.id" @input="changeTitle" :value="getTitle()" />
+                <input type="text" :id="'inputTitle_' + props.uuid" @input="changeTitle" :value="getTitle()" />
             </div>
             <div class="cvContentItemEntry">
                 <label :for="'inputSubtitle_' + props.uuid">Untertitel</label>
-                <input type="text" id="'inputSubtitle_' + props.id" @input="changeSubtitle" :value="getSubtitle()" />
+                <input type="text" :id="'inputSubtitle_' + props.uuid" @input="changeSubtitle" :value="getSubtitle()" />
             </div>
-            <div  class="cvContentItemEntry">
+            <div class="cvContentItemEntry">
                 <label :for="'inputText_' + props.uuid">Inhalt</label>
-                <textarea type="text" id="'inputText_' + props.id" @input="changeText" :value="getText()"></textarea>
+                <textarea type="text" :id="'inputText_' + props.uuid" @input="changeText" :value="getText()"></textarea>
             </div>
-            <div  class="cvContentItemEntry">
+            <div class="cvContentItemEntry">
                 <label :for="'inputLocation_' + props.uuid">Ort</label>
-                <input type="text" id="'inputLocation_' + props.id" @input="changeLocation" :value="getLocation()" />
+                <input type="text" :id="'inputLocation_' + props.uuid" @input="changeLocation" :value="getLocation()" />
             </div>
-            <div  class="cvContentItemEntry">
+            <div class="cvContentItemEntry">
                 <label :for="'inputShowDates_' + props.uuid">Datum anzeigen</label>
                 <input
                     type="checkbox"
-                    id="'inputShowDates_' + props.id"
+                    :id="'inputShowDates_' + props.uuid"
                     @input="changeShowDates"
                     :value="getShowDates()"
                 />
             </div>
-            <div  class="cvContentItemEntry">
+            <div class="cvContentItemEntry">
                 <label :for="'inputStart_' + props.uuid">Start</label>
                 <input
                     type="date"
-                    id="'inputStart_' + props.id"
+                    :id="'inputStart_' + props.uuid"
                     :disabled="!getShowDates()"
                     @input="changeStart"
                     :value="getStart()"
                 />
             </div>
-            <div  class="cvContentItemEntry">
+            <div class="cvContentItemEntry">
                 <label :for="'inputShowEnd_' + props.uuid">Zeige Ende an</label>
                 <input
                     type="checkbox"
-                    id="'inputShowEnd_' + props.id"
+                    :id="'inputShowEnd_' + props.uuid"
                     :disabled="!getShowDates()"
                     @input="changeShowEnd"
                     :value="getShowEnd()"
@@ -290,7 +316,7 @@ function addSubItem(): void {
                 <label :for="'inputUntilToday_' + props.uuid">Bis Heute</label>
                 <input
                     type="checkbox"
-                    id="'inputUntilToday_' + props.id"
+                    :id="'inputUntilToday_' + props.uuid"
                     :disabled="!getShowDates() || !getShowEnd()"
                     @input="changeUntilToday"
                     :value="getUntilToday()"
@@ -298,13 +324,31 @@ function addSubItem(): void {
                 <label :for="'inputEnd_' + props.uuid">Ende</label>
                 <input
                     type="date"
-                    id="'inputEnd_' + props.id"
+                    :id="'inputEnd_' + props.uuid"
                     :disabled="!getShowDates() || !getShowEnd()"
                     @input="changeEnd"
                     :value="getEnd()"
                 />
             </div>
-            <div >
+            <div class="cvContentItemEntry">
+                <label :for="'inputItemPicture_' + props.uuid" class="btnFileLabel">Bild</label>
+                <input
+                    type="file"
+                    accept="image/*"
+                    :id="'inputItemPicture_' + props.uuid"
+                    :name="'inputItemPicture_' + props.uuid"
+                    @change="handleFileChange"
+                />
+                <div class="cvContentBullitImagePreview">
+                    <img
+                        v-if="content.getItem(props.uuid)?.image"
+                        :src="content.getItem(props.uuid)?.image"
+                        height="40"
+                    />
+                    <button v-if="content.getItem(props.uuid)?.image" @click="removeImage()">❌</button>
+                </div>
+            </div>
+            <div>
                 <transition-group name="list" tag="div">
                     <TheCvContentItemSub
                         v-for="subitem in (content.getItem(props.uuid) as TimelineItem).subitems"
@@ -328,5 +372,10 @@ function addSubItem(): void {
 .cvContentItemSubFooter {
     display: flex;
     justify-content: center;
+}
+
+.cvContentBullitImagePreview {
+    display: flex;
+    gap: 10px;
 }
 </style>

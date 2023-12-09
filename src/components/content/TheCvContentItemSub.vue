@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useContentStore } from "@/stores/content";
-import type { TimelineItem, TimelineItemSub } from "../TimelineItem";
 interface Props {
     parent: string;
     uuid: string;

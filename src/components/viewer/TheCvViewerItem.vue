@@ -43,8 +43,11 @@ function getMonthStr(date: Date): string {
     <div class="cvViewerItemTitleAndLocation">
         <span class="cvViewerItemTitle cvMainSectionSubtitle cvMainSectionSubtitle_01">{{ props.item.title }}</span>
         <span class="cvViewerItemLocation cvMainSectionSubtitle cvMainSectionSubtitle_02"
-            >&hairsp;/&hairsp;{{ props.item.location }}</span
+        >&hairsp;/&hairsp;{{ props.item.location }}</span
         >
+    </div>
+    <div class="cvViewerItemImage" v-if="props.item.image">
+        <img class="cvViewerItemImageContent" :src="props.item.image" />
     </div>
     <div class="cvViewerItemSubtitle" v-if="props.item.subtitle">{{ props.item.subtitle }}</div>
     <TheCvViewerItemSpacer v-if="props.item.subtitle" :height_mm="DIMENSIONS.itemSpacerTitle_mm" />
@@ -90,6 +93,18 @@ function getMonthStr(date: Date): string {
 .cvViewerItemLocation {
 }
 .cvViewerItemImage {
+    grid-column-start: l1;
+    grid-column-end: l2;
+    position: relative;
+    display: flex;
+    justify-items: center;
+}
+
+.cvViewerItemImageContent {
+    position: absolute;
+    padding: 10px 20px 0px 0px;
+    width: v-bind("in_mm(DIMENSIONS.timelinePosition_x_mm - DIMENSIONS.a4padding_l_mm)");
+
 }
 .cvViewerItemTitleAndLocation {
     grid-column: r1 / -1;
@@ -99,8 +114,6 @@ function getMonthStr(date: Date): string {
 .cvViewerItemTitle {
 }
 
-.cvViewerItemLocation {
-}
 .cvViewerItemText {
     grid-column-start: r1;
     grid-column-end: span end;
