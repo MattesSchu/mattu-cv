@@ -37,9 +37,9 @@
 }
 
 :root {
-    --font-size-h1: 48px;
-    --font-size-h2: 32px;
-    --font-size-h3: 24px;
+    --font-size-h1: 36pt;
+    --font-size-h2: 24pt;
+    --font-size-h3: 18pt;
 
     --font-family:
         Inter,
@@ -73,7 +73,7 @@ body {
         background-color 0.5s;
     line-height: 1.6;
     font-family: var(--font-family);
-    font-size: 15px;
+    font-size: 11pt;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

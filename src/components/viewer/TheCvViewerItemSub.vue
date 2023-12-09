@@ -52,7 +52,7 @@ const BULLIT_ICON_SIZE = 15;
     grid-column-start: 3;
     justify-self: center;
     align-self: start;
-    font-size: var(--content-font-siez);
+    font-size: var(--content-font-size);
     line-height: 1.2;
     color: v-bind("settings.color");
 }
