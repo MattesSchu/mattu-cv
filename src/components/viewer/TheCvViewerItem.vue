@@ -102,7 +102,7 @@ function getMonthStr(date: Date): string {
 
 .cvViewerItemImageContent {
     position: absolute;
-    padding: 10px 20px 0px 0px;
+    padding: 2mm 4mm 0px 0px;
     width: v-bind("in_mm(DIMENSIONS.timelinePosition_x_mm - DIMENSIONS.a4padding_l_mm)");
 
 }

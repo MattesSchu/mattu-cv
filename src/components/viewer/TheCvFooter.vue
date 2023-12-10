@@ -43,6 +43,6 @@ const settings = useSettingsStore();
 .cvFooterPagination {
     position: absolute;
     bottom: 0px;
-    right: 25px;
+    right: 10mm;
 }
 </style>

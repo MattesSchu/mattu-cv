@@ -41,13 +41,13 @@ function getBirthDayString(): string {
 </template>
 <style scoped lang="scss">
 .cvPersonal {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 4mm;
+    margin-bottom: 4mm;
     grid-column: r1 / -1;
     display: grid;
     grid-template-columns: [left] 1fr [right] 5fr;
-    column-gap: 10px;
-    row-gap: 2px;
+    column-gap: 2mm;
+    row-gap: 1mm;
 }
 
 .cvPersonalLeft {

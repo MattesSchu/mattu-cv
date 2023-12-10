@@ -3,7 +3,7 @@ import TheCvFooter from "./TheCvFooter.vue";
 import TheCvViewerItem from "./TheCvViewerItem.vue";
 import TheCvViewerSectionHeading from "./TheCvViewerSectionHeading.vue";
 import TheCvViewerPersonal from "./TheCvViewerPersonal.vue";
-import { getLeftWidth, getL1Width, getL3Width, bisWidth_mm } from "./viewerWidths";
+import { getL1Width, getL3Width, bisWidth_mm } from "./viewerWidths";
 // Elements
 import VerticalLine from "@/elements/VerticalLine.vue";
 import ProfilePicture from "@/elements/ProfilePicture.vue";
@@ -16,7 +16,6 @@ import { useContentStore } from "@/stores/content";
 import { mdiCogOutline, mdiHeartOutline, mdiSchoolOutline, mdiTranslate } from "@mdi/js";
 
 const content = useContentStore();
-
 </script>
 <template>
     <div class="cv">
@@ -29,17 +28,33 @@ const content = useContentStore();
                 <div class="cvTitle">{{ content.personalInformation.name }}</div>
                 <TheCvViewerPersonal />
                 <TheCvViewerSectionHeading title="Werdegang" :path="mdiSchoolOutline" />
-                <TheCvViewerItem v-for="(item, idx) in content.getCategoryItems(Category.WERDEGANG)" :key="idx" :item="item" />
+                <TheCvViewerItem
+                    v-for="(item, idx) in content.getCategoryItems(Category.WERDEGANG)"
+                    :key="idx"
+                    :item="item"
+                />
             </div>
         </div>
         <div class="cvPage">
             <div class="cvPageContent">
                 <TheCvViewerSectionHeading title="Erfahrung" :path="mdiCogOutline" />
-                <TheCvViewerItem v-for="(item, idx) in content.getCategoryItems(Category.AUSBILDUNG)" :key="idx" :item="item" />
+                <TheCvViewerItem
+                    v-for="(item, idx) in content.getCategoryItems(Category.AUSBILDUNG)"
+                    :key="idx"
+                    :item="item"
+                />
                 <TheCvViewerSectionHeading title="Engagement" :path="mdiHeartOutline" />
-                <TheCvViewerItem v-for="(item, idx) in content.getCategoryItems(Category.ENGAGEMENT)" :key="idx" :item="item" />
+                <TheCvViewerItem
+                    v-for="(item, idx) in content.getCategoryItems(Category.ENGAGEMENT)"
+                    :key="idx"
+                    :item="item"
+                />
                 <TheCvViewerSectionHeading title="Sprachen" :path="mdiTranslate" />
-                <TheCvViewerItem v-for="(item, idx) in content.getCategoryItems(Category.SPRACHE)" :key="idx" :item="item" />
+                <TheCvViewerItem
+                    v-for="(item, idx) in content.getCategoryItems(Category.SPRACHE)"
+                    :key="idx"
+                    :item="item"
+                />
             </div>
         </div>
     </div>
@@ -71,7 +86,7 @@ const content = useContentStore();
     padding-top: v-bind("in_mm(DIMENSIONS.a4padding_t_mm)");
     padding-right: v-bind("in_mm(DIMENSIONS.a4padding_r_mm)");
     padding-left: v-bind("in_mm(DIMENSIONS.a4padding_l_mm)");
-    row-gap: 2px;
+    row-gap: 1mm;
 }
 
 .cvTitle {
@@ -80,15 +95,19 @@ const content = useContentStore();
 
     font-size: var(--font-size-h1);
     text-transform: uppercase;
-    margin-top: -10px;
+    margin-top: -2mm;
 }
 
 @media print {
+    @page {
+        margin: 0mm;
+    }
+
     body {
         background-color: white;
     }
     .page {
-        margin: 0px;
+        margin: 0mm;
         background-color: white;
     }
     .cv {
@@ -98,6 +117,11 @@ const content = useContentStore();
 
     .cvPage {
         border-radius: 0px;
+    }
+
+    * {
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
     }
 }
 </style>

@@ -19,7 +19,7 @@ const imageWidth = 50;
 </template>
 <style scoped lang="scss">
 .cvViewerSectionHeaderImage {
-    padding: 8px;
+    padding: 2mm;
     border-radius: 50%;
     grid-column-start: timeline;
     align-self: center;
